@@ -24,7 +24,7 @@ public class Poll {
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String description;
 
     @OneToMany(mappedBy = "poll", orphanRemoval = true, fetch = FetchType.LAZY)

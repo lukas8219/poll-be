@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class PollDTO {
 
+    private Long id;
     private String subject;
     private String description;
     private Long favor;

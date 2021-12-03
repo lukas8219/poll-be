@@ -9,6 +9,7 @@ import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
 import com.lukas8219.pollbe.data.mapper.PollMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 @Component
 public abstract class PollDecorator implements PollMapper {
@@ -26,9 +27,13 @@ public abstract class PollDecorator implements PollMapper {
     }
 
     private Long countVotes(Poll poll, VoteDecisionEnum decision) {
-        return poll.getVotes().stream()
-                .map(PollVote::getDecision)
-                .filter(vote -> vote == decision)
-                .count();
+        if(!CollectionUtils.isEmpty(poll.getVotes())){
+            return poll.getVotes().stream()
+                    .map(PollVote::getDecision)
+                    .filter(vote -> vote == decision)
+                    .count();
+        } else {
+            return 0L;
+        }
     }
 }

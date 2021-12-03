@@ -3,7 +3,9 @@ package com.lukas8219.pollbe.service.poll;
 import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.dto.PollVoteDTO;
 import com.lukas8219.pollbe.data.mapper.PollVoteMapper;
+import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
 import com.lukas8219.pollbe.repository.PollRepository;
+import com.lukas8219.pollbe.repository.PollVoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,9 @@ import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.FAVOR;
 @RequiredArgsConstructor
 public class PollVoteService {
 
-    private final PollRepository repository;
+    private final PollRepository pollRepository;
+    private final PollVoteRepository voteRepository;
+
     private final PollVoteMapper mapper;
 
     public PollVoteDTO vote(Long id, boolean approved) {
@@ -24,9 +28,8 @@ public class PollVoteService {
         var vote = new PollVote();
         vote.setDecision(decision);
         vote.setVotedAt(LocalDateTime.now());
-        vote.setPoll(repository.findByIdAndExpiration(id).orElseThrow(RuntimeException::new));
-
-        return mapper.toDTO(vote);
+        vote.setPoll(pollRepository.findByIdAndExpiration(id).orElseThrow(PollExpiredOrNotFoundException::new));
+        return mapper.toDTO(voteRepository.save(vote));
     }
 
 }
