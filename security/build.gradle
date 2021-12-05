@@ -2,13 +2,20 @@ plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'java'
+    id 'idea'
+    id 'java-library'
 }
 
-group 'com.lukas8219'
-version '0.0.1-SNAPSHOT'
+group = 'com.lukas8219'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
+}
+
+bootJar {
+    enabled = false
 }
 
 dependencies {

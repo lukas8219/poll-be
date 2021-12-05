@@ -1,5 +1,6 @@
 package com.lukas8219.pollbe.api;
 
+import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.dto.CreatePollDTO;
 import com.lukas8219.pollbe.data.dto.PollDTO;
 import com.lukas8219.pollbe.data.dto.PollVoteDTO;
