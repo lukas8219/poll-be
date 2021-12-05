@@ -27,4 +27,7 @@ public class PollVote {
 
     @Column(name = "voted_at")
     private LocalDateTime votedAt;
+
+    @Column(name = "voted_by")
+    private Long votedBy;
 }

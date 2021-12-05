@@ -30,4 +30,7 @@ public class Poll {
     @OneToMany(mappedBy = "poll", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PollVote> votes;
 
+    @Column(name = "created_by")
+    private Long createdBy;
+
 }
