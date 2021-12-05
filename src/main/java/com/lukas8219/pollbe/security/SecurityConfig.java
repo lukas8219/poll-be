@@ -16,13 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityFilter filter;
-    private final PollUserDetailsService userDetailsService;
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-//        auth.userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder);
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -34,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        //TODO add an EntryPoint
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
