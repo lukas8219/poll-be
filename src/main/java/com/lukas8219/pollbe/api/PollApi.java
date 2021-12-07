@@ -9,12 +9,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("v1/poll")
 @RequiredArgsConstructor
 public class PollApi {
 
     private final PollFacade facade;
+
+    @GetMapping
+    public List<PollDTO> getAll(){
+        return facade.getAll();
+    }
 
     @PostMapping
     public PollDTO create(@AuthenticationPrincipal PollUserDetails userDetails, @RequestBody CreatePollDTO dto) {

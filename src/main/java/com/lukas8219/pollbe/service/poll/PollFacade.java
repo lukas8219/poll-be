@@ -7,6 +7,8 @@ import com.lukas8219.pollbe.data.dto.PollVoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PollFacade {
@@ -25,5 +27,9 @@ public class PollFacade {
 
     public PollDTO getPoll(Long id) {
         return getService.get(id);
+    }
+
+    public List<PollDTO> getAll() {
+        return getService.getAll();
     }
 }

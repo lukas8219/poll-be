@@ -6,6 +6,9 @@ import com.lukas8219.pollbe.repository.PollRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PollGetService {
@@ -17,5 +20,12 @@ public class PollGetService {
         return repository.findById(id)
                 .map(mapper::toDTO)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    public List<PollDTO> getAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
