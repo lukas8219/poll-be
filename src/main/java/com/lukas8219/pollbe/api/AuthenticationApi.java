@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.cors.CorsConfiguration;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class AuthenticationApi {
     private final AuthenticationFacade facade;
 
     @PostMapping
-    public TokenDTO authenticate(@RequestBody AuthenticationDTO authenticationDTO){
+    public TokenDTO authenticate(@RequestBody AuthenticationDTO authenticationDTO) {
         return facade.authenticate(authenticationDTO);
     }
 
