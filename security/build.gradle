@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'java-library'
+    id "io.freefair.lombok" version "6.3.0"
 }
 
 group = 'com.lukas8219'
@@ -28,6 +29,7 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
