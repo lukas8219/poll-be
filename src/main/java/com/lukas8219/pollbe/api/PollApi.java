@@ -19,8 +19,8 @@ public class PollApi {
     private final PollFacade facade;
 
     @GetMapping
-    public List<PollDTO> getAll(){
-        return facade.getAll();
+    public List<PollDTO> getAll(@AuthenticationPrincipal PollUserDetails userDetails) {
+        return facade.getAll(userDetails);
     }
 
     @PostMapping
@@ -39,8 +39,9 @@ public class PollApi {
     }
 
     @GetMapping("{id}")
-    public PollDTO getPoll(@PathVariable Long id) {
-        return facade.getPoll(id);
+    public PollDTO getPoll(@AuthenticationPrincipal PollUserDetails userDetails,
+                           @PathVariable Long id) {
+        return facade.getPoll(id, userDetails);
     }
 
 }

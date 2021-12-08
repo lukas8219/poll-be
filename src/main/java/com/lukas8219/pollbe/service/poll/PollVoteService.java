@@ -26,12 +26,16 @@ public class PollVoteService {
 
     public PollVoteDTO vote(Long id, boolean approved, PollUserDetails userDetails) {
         var decision = approved ? FAVOR : AGAINST;
-        var vote = new PollVote();
-        vote.setDecision(decision);
-        vote.setVotedAt(LocalDateTime.now());
-        vote.setPoll(pollRepository.findByIdAndExpiration(id).orElseThrow(PollExpiredOrNotFoundException::new));
-        vote.setVotedBy(userDetails.getId());
-        return mapper.toDTO(voteRepository.save(vote));
+        if (!voteRepository.existsByPollIdAndVotedBy(id, userDetails.getId())) {
+            var vote = new PollVote();
+            vote.setDecision(decision);
+            vote.setVotedAt(LocalDateTime.now());
+            vote.setPoll(pollRepository.findByIdAndExpiration(id).orElseThrow(PollExpiredOrNotFoundException::new));
+            vote.setVotedBy(userDetails.getId());
+            return mapper.toDTO(voteRepository.save(vote));
+        } else {
+            throw new RuntimeException("Você já votou para esta assembleia");
+        }
     }
 
 }

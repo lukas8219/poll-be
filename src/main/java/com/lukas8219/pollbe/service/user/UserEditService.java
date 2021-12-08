@@ -20,6 +20,8 @@ public class UserEditService {
         user.setEmail(dto.getEmail());
         user.setName(dto.getName());
         user.setPhoneNumber(dto.getPhoneNumber());
+
+        repository.save(user);
         return mapper.toDTO(user);
     }
 }

@@ -19,7 +19,7 @@ public class PollCreateService {
         var poll = mapper.toPoll(dto);
         poll.setCreatedBy(userDetails.getId());
         repository.save(poll);
-        return mapper.toDTO(poll);
+        return mapper.toDTO(poll, userDetails);
     }
 
 }

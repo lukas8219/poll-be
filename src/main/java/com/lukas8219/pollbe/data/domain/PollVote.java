@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "poll_votes")
+@Table(name = "poll_votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"poll_id", "voted_by"})})
 @Getter
 @Setter
 public class PollVote {

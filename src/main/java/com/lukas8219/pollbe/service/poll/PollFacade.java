@@ -25,11 +25,11 @@ public class PollFacade {
         return voteService.vote(id, vote, userDetails);
     }
 
-    public PollDTO getPoll(Long id) {
-        return getService.get(id);
+    public PollDTO getPoll(Long id, PollUserDetails userDetails) {
+        return getService.get(id, userDetails);
     }
 
-    public List<PollDTO> getAll() {
-        return getService.getAll();
+    public List<PollDTO> getAll(PollUserDetails userDetails) {
+        return getService.getAll(userDetails);
     }
 }
