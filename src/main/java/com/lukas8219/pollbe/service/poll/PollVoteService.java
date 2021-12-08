@@ -4,6 +4,7 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.dto.PollVoteDTO;
 import com.lukas8219.pollbe.data.mapper.PollVoteMapper;
+import com.lukas8219.pollbe.exception.AlreadyVotePollException;
 import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
 import com.lukas8219.pollbe.repository.PollRepository;
 import com.lukas8219.pollbe.repository.PollVoteRepository;
@@ -34,7 +35,7 @@ public class PollVoteService {
             vote.setVotedBy(userDetails.getId());
             return mapper.toDTO(voteRepository.save(vote));
         } else {
-            throw new RuntimeException("Você já votou para esta assembleia");
+            throw new AlreadyVotePollException();
         }
     }
 

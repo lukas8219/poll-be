@@ -2,6 +2,7 @@ package com.lukas8219.pollbe.service;
 
 import com.lukas8219.pollbe.data.domain.FileStorage;
 import com.lukas8219.pollbe.data.dto.FileDTO;
+import com.lukas8219.pollbe.exception.UnprocessableEntityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class LocalFileStorageService implements FileStorageService {
             Files.write(result, file.getFile());
         } catch (Exception e) {
             log.error("An error occurred when trying to save File to LocalFileStorage", e);
-            throw new RuntimeException(e);
+            throw new UnprocessableEntityException("Não foi possível salvar seu arquivo.");
         }
     }
 

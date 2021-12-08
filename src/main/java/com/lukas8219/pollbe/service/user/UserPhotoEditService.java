@@ -6,6 +6,8 @@ import com.lukas8219.pollbe.data.domain.UserPhoto;
 import com.lukas8219.pollbe.data.dto.FileDTO;
 import com.lukas8219.pollbe.data.dto.UserPhotoDTO;
 import com.lukas8219.pollbe.data.mapper.UserMapper;
+import com.lukas8219.pollbe.exception.UnprocessableEntityException;
+import com.lukas8219.pollbe.exception.UserNotFoundException;
 import com.lukas8219.pollbe.repository.UserPhotoRepository;
 import com.lukas8219.pollbe.repository.UserRepository;
 import com.lukas8219.pollbe.service.FileStorageService;
@@ -33,7 +35,7 @@ public class UserPhotoEditService {
 
     @Transactional
     public UserPhotoDTO edit(PollUserDetails userDetails, MultipartFile file) {
-        var user = repository.findById(userDetails.getId()).orElseThrow(RuntimeException::new);
+        var user = repository.findById(userDetails.getId()).orElseThrow(UserNotFoundException::new);
 
         if (user.getPhoto() != null) {
             deleteUserPhoto(user);
@@ -61,7 +63,7 @@ public class UserPhotoEditService {
             return new FileDTO(bytes, folderName, fileName);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException("Not able to get file Bytes");
+            throw new UnprocessableEntityException("Não foi possível salvar seu arquivo");
         }
     }
 
