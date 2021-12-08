@@ -3,10 +3,12 @@ package com.lukas8219.pollbe.service.authentication;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.dto.AuthenticationDTO;
 import com.lukas8219.pollbe.data.dto.TokenDTO;
+import com.lukas8219.pollbe.exception.UserInvalidException;
 import com.lukas8219.pollbe.security.JwtUtil;
 import com.lukas8219.pollbe.service.user.UserGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,13 @@ public class AuthenticationFacade {
     }
 
     private PollUserDetails getPrincipal(AuthenticationDTO dto) {
-        return (PollUserDetails) authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()))
-                .getPrincipal();
+        try {
+            return (PollUserDetails) authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()))
+                    .getPrincipal();
+        } catch (BadCredentialsException e) {
+            throw new UserInvalidException();
+        }
+
     }
 }
