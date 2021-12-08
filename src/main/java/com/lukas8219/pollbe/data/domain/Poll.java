@@ -18,10 +18,10 @@ public class Poll {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "expires_at")
+    @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
-    @Column(name = "subject")
+    @Column(name = "subject", nullable = false)
     private String subject;
 
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
@@ -30,7 +30,7 @@ public class Poll {
     @OneToMany(mappedBy = "poll", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PollVote> votes;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
 }

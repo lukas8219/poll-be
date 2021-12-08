@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -62,7 +63,7 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getLink(FileStorage file) {
-        return Paths.get(String.format("%s/%s", resourceServer, formatPathFor(file.getFolder(), file.getFileName()))).toString();
+        return URI.create(String.format("%s/%s", resourceServer, formatPathFor(file.getFolder(), file.getFileName()))).toString();
     }
 
     public String formatPathFor(String folderName, String fileName) {

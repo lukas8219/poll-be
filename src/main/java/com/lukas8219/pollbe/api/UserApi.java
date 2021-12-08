@@ -17,6 +17,11 @@ public class UserApi {
 
     private final UserFacade facade;
 
+    @GetMapping
+    public UserDTO getUser(@AuthenticationPrincipal PollUserDetails userDetails){
+        return facade.getUser(userDetails);
+    }
+
     @PutMapping
     public UserDTO editUser(@AuthenticationPrincipal PollUserDetails userDetails,
                             @RequestBody UserEditDTO dto){
