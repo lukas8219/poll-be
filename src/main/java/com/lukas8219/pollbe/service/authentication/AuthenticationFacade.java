@@ -10,7 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +33,14 @@ public class AuthenticationFacade {
 
     private PollUserDetails getPrincipal(AuthenticationDTO dto) {
         try {
-            return (PollUserDetails) authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()))
-                    .getPrincipal();
+            return (PollUserDetails) authenticate(dto.getEmail(), dto.getPassword()).getPrincipal();
         } catch (BadCredentialsException e) {
             throw new UserInvalidException();
         }
 
+    }
+
+    public Authentication authenticate(String email, String password){
+        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
     }
 }
