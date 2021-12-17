@@ -15,6 +15,9 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
 
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
+
+        //TODO should I change it now?? Probably not.
+        
         messages
                 .simpSubscribeDestMatchers("/topic/messages")
                 .authenticated()

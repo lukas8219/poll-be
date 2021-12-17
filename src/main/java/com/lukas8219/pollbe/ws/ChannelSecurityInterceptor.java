@@ -1,6 +1,7 @@
 package com.lukas8219.pollbe.ws;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
+import com.lukas8219.pollbe.exception.ForbiddenException;
 import com.lukas8219.pollbe.service.authentication.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ChannelSecurityInterceptor implements ChannelInterceptor {
 
-    private static final String USERNAME_HEADER = "login";
-    private static final String PASSWORD_HEADER = "password";
+    private final String USERNAME_HEADER = "login";
+    private final String PASSWORD_HEADER = "password";
     private final AuthenticationFacade authenticationFacade;
 
     @Override
@@ -37,7 +38,7 @@ public class ChannelSecurityInterceptor implements ChannelInterceptor {
             var user = (Authentication) accessor.getUser();
             var userDetails = (PollUserDetails) user.getPrincipal();
             if (!accessor.getDestination().contains(userDetails.getId().toString())) {
-                throw new BadCredentialsException("Não é possível cadastrar nessa fila");
+                throw new ForbiddenException();
             }
         }
         return message;

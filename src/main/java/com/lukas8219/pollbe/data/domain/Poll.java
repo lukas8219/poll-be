@@ -33,4 +33,6 @@ public class Poll {
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
+    @Column(name = "reported_at")
+    private LocalDateTime reportedAt;
 }

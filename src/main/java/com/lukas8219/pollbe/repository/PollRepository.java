@@ -16,4 +16,5 @@ public interface PollRepository extends CrudRepository<Poll, Long> {
     Optional<Poll> findByIdAndExpiration(Long id);
 
     List<Poll> findAll();
+
 }
