@@ -21,8 +21,6 @@ public class PollApi {
 
     private final PollFacade facade;
 
-
-
     @GetMapping
     public List<PollDTO> getAll(@AuthenticationPrincipal PollUserDetails userDetails) {
         return facade.getAll(userDetails);
