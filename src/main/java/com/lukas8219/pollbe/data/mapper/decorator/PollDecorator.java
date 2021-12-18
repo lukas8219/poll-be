@@ -6,7 +6,6 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.dto.PollDTO;
 import com.lukas8219.pollbe.data.dto.PollResultDTO;
-import com.lukas8219.pollbe.data.dto.PollResultListDTO;
 import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
@@ -59,7 +58,7 @@ public abstract class PollDecorator implements PollMapper {
 
     @Override
     public List<PollResultDTO> toReportList(List<PollResultQueryRow> result) {
-       return result.stream()
+        return result.stream()
                 .collect(Collectors.groupingBy(PollResultQueryRow::getId, Collectors.toList()))
                 .values()
                 .stream()
@@ -88,5 +87,11 @@ public abstract class PollDecorator implements PollMapper {
         } else {
             return PollResultEnum.TIE;
         }
+    }
+
+    @Override
+    public PollResultDTO toFinal(PollResultDTO x, List<Long> usersThatVoted) {
+        x.setUsers(usersThatVoted);
+        return x;
     }
 }

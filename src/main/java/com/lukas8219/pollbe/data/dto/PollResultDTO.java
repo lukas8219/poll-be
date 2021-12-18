@@ -14,6 +14,6 @@ public class PollResultDTO {
 
     private final Long pollId;
     private final PollResultEnum result;
-    private List<Long> users = List.of(1L); //TODO after query refactor it will contain all IDs.
+    private List<Long> users;
 
 }

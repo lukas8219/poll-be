@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.JoinType;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -44,12 +45,28 @@ public class PollResultDaoImp implements PollResultDao {
                 votes.get("decision")
         );
 
+        //TODO Never do this Horror
         var result = entityManager.createQuery(query)
                 .getResultList();
-        return mapper.toReportList(result);
+        var resultDTO = mapper.toReportList(result);
+
+        return resultDTO.stream()
+                .map(x -> mapper.toFinal(x, getUsersThatVoted(x.getPollId())))
+                .collect(Collectors.toList());
     }
 
 
+    private List<Long> getUsersThatVoted(Long pollId) {
+        var cb = entityManager.getCriteriaBuilder();
+        var query = cb.createQuery(Long.class);
+        var from = query.from(PollVote.class);
+        var poll = from.join("poll");
+        query.select(from.get("votedBy"));
+        query.where(cb.equal(poll.get("id"), pollId));
+        return entityManager.createQuery(query)
+                .getResultList();
+
+    }
     //SELECT COUNT(id) FROM poll.poll_votes WHERE decision = "FAVOR" and poll_id = p.id)
 //    private Long getSelectCount(Path<Object> poll, VoteDecisionEnum vote) {
 //        var cb = entityManager.getCriteriaBuilder();

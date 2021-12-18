@@ -26,4 +26,6 @@ public interface PollMapper {
     PollDTO toDTO(Poll poll, PollUserDetails userDetails);
 
     List<PollResultDTO> toReportList(List<PollResultQueryRow> result);
+
+    PollResultDTO toFinal(PollResultDTO x, List<Long> usersThatVoted);
 }
