@@ -67,21 +67,5 @@ public class PollResultDaoImp implements PollResultDao {
                 .getResultList();
 
     }
-    //SELECT COUNT(id) FROM poll.poll_votes WHERE decision = "FAVOR" and poll_id = p.id)
-//    private Long getSelectCount(Path<Object> poll, VoteDecisionEnum vote) {
-//        var cb = entityManager.getCriteriaBuilder();
-//
-//        var query = cb.createQuery(Long.class);
-//        var from = query.from(PollVote.class);
-//
-//        query.select(cb.count(from));
-//
-//        query.where(
-//                cb.equal(from.get("decision"), vote),
-//                cb.equal(from.get("poll").get("id"), 1L)
-//        );
-//
-//        return entityManager.createQuery(query)
-//                .getSingleResult();
-//    }
+
 }
