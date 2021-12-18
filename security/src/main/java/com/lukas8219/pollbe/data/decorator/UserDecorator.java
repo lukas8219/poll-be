@@ -27,8 +27,11 @@ public abstract class UserDecorator implements UserMapper {
 
     @Override
     public UserPhotoDTO toPhotoDTO(UserPhoto photo) {
-        var result = new UserPhotoDTO();
-        result.setLink(fileStorageService.getLink(photo));
-        return result;
+        if(photo != null){
+            var result = new UserPhotoDTO();
+            result.setLink(fileStorageService.getLink(photo));
+            return result;
+        }
+        return null;
     }
 }

@@ -1,19 +1,17 @@
 package com.lukas8219.pollbe.data.dto;
 
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PollResultDTO {
 
-    private Long pollId;
-    private PollResultEnum result;
-    private List<UserVoteDecisionDTO> users;
+    private final Long pollId;
+    private final PollResultEnum result;
+    private Long user;
 
 }

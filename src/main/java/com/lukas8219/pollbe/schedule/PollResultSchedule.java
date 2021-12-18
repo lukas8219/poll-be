@@ -1,20 +1,24 @@
 package com.lukas8219.pollbe.schedule;
 
-import com.lukas8219.pollbe.repository.PollRepository;
+import com.lukas8219.pollbe.service.poll.PollResultReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PollResultSchedule {
 
-    private final PollRepository repository;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final PollResultReportService reportService;
 
-    //@Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "* */1 * * * *")
     public void reportPollResult() {
-        //TODO implement report schedule.
+        log.info("Running schedule at [{}]", LocalDateTime.now());
+        reportService.reportPollResults();
     }
 
 }
