@@ -5,12 +5,19 @@ import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.dto.PollDTO;
+import com.lukas8219.pollbe.data.dto.PollResultDTO;
+import com.lukas8219.pollbe.data.dto.PollResultListDTO;
+import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
 import com.lukas8219.pollbe.data.mapper.PollMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.ABSTENTION;
 
@@ -47,6 +54,39 @@ public abstract class PollDecorator implements PollMapper {
                     .count();
         } else {
             return 0L;
+        }
+    }
+
+    @Override
+    public List<PollResultDTO> toReportList(List<PollResultQueryRow> result) {
+       return result.stream()
+                .collect(Collectors.groupingBy(PollResultQueryRow::getId, Collectors.toList()))
+                .values()
+                .stream()
+                .map(this::toResultDTO)
+                .collect(Collectors.toList());
+    }
+
+    private PollResultDTO toResultDTO(List<PollResultQueryRow> rows) {
+        var result = rows.stream()
+                .max(Comparator.comparing(PollResultQueryRow::getCount))
+                .map(PollResultQueryRow::getDecision)
+                .map(this::toResultEnum)
+                .orElse(null);
+        var pollId = rows.stream()
+                .map(PollResultQueryRow::getId)
+                .findAny()
+                .orElse(null);
+        return new PollResultDTO(pollId, result);
+    }
+
+    private PollResultEnum toResultEnum(VoteDecisionEnum voteDecisionEnum) {
+        if (voteDecisionEnum == VoteDecisionEnum.FAVOR) {
+            return PollResultEnum.APPROVED;
+        } else if (voteDecisionEnum == VoteDecisionEnum.AGAINST) {
+            return PollResultEnum.REFUSED;
+        } else {
+            return PollResultEnum.TIE;
         }
     }
 }

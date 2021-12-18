@@ -1,10 +1,7 @@
 package com.lukas8219.pollbe.api;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
-import com.lukas8219.pollbe.data.dto.PollResultDTO;
-import com.lukas8219.pollbe.data.dto.UserVoteDecisionDTO;
-import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
-import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
+import com.lukas8219.pollbe.data.dto.PollResultListDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -25,20 +21,9 @@ public class WebsocketApi {
     private final SimpMessagingTemplate template;
 
     @GetMapping
-    public PollResultDTO chat(@AuthenticationPrincipal PollUserDetails userDetails) {
-
-        var user = new UserVoteDecisionDTO();
-        user.setDecision(VoteDecisionEnum.FAVOR);
-        user.setId(1L);
-
-        var poll = new PollResultDTO(
-                1L,
-                PollResultEnum.APPROVED,
-                Collections.singletonList(user)
-        );
-
-        template.convertAndSendToUser(userDetails.getId().toString(), "/queue/", List.of(poll));
-        return poll;
+    public PollResultListDTO chat(@AuthenticationPrincipal PollUserDetails userDetails) {
+        template.convertAndSendToUser(userDetails.getId().toString(), "/queue/", List.of("new String()"));
+        return null;
     }
 
 }
