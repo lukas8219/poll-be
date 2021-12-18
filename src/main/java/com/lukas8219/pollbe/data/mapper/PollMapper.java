@@ -9,6 +9,7 @@ import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
 import com.lukas8219.pollbe.data.mapper.decorator.PollDecorator;
 import org.mapstruct.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -27,5 +28,5 @@ public interface PollMapper {
 
     List<PollResultDTO> toReportList(List<PollResultQueryRow> result);
 
-    PollResultDTO toFinal(PollResultDTO x, List<Long> usersThatVoted);
+    ArrayList<PollResultDTO> toReportList(List<Long> usersThatVoted, PollResultDTO result);
 }

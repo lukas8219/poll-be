@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,8 +91,15 @@ public abstract class PollDecorator implements PollMapper {
     }
 
     @Override
-    public PollResultDTO toFinal(PollResultDTO x, List<Long> usersThatVoted) {
-        x.setUsers(usersThatVoted);
-        return x;
+    public ArrayList<PollResultDTO> toReportList(List<Long> usersThatVoted, PollResultDTO result) {
+        return new ArrayList<>(
+                usersThatVoted.stream()
+                        .map(id -> {
+                            var dto = new PollResultDTO(result.getPollId(), result.getResult());
+                            dto.setUser(id);
+                            return dto;
+                        })
+                        .collect(Collectors.toList())
+        );
     }
 }

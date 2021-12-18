@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.JoinType;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +53,23 @@ public class PollResultDaoImp implements PollResultDao {
         var resultDTO = mapper.toReportList(result);
 
         return resultDTO.stream()
-                .map(x -> mapper.toFinal(x, getUsersThatVoted(x.getPollId())))
+                .map(x -> mapper.toReportList(getUsersThatVoted(x.getPollId()), x))
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateReportedAtForPolls(List<Long> collect) {
+        var cb = entityManager.getCriteriaBuilder();
+        var update = cb.createCriteriaUpdate(Poll.class);
+        var from = update.from(Poll.class);
+        update.set("reportedAt", LocalDateTime.now());
+        update.where(
+                cb.lessThan(from.get("expiresAt"), LocalDateTime.now()),
+                cb.isNull(from.get("reportedAt"))
+        );
+        entityManager.createQuery(update).executeUpdate();
     }
 
 
