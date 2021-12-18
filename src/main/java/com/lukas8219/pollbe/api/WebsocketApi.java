@@ -26,14 +26,16 @@ public class WebsocketApi {
 
     @GetMapping
     public PollResultDTO chat(@AuthenticationPrincipal PollUserDetails userDetails) {
-        var poll = new PollResultDTO();
+
         var user = new UserVoteDecisionDTO();
         user.setDecision(VoteDecisionEnum.FAVOR);
         user.setId(1L);
 
-        poll.setPollId(1L);
-        poll.setResult(PollResultEnum.APPROVED);
-        poll.setUsers(Collections.singletonList(user));
+        var poll = new PollResultDTO(
+                1L,
+                PollResultEnum.APPROVED,
+                Collections.singletonList(user)
+        );
 
         template.convertAndSendToUser(userDetails.getId().toString(), "/queue/", List.of(poll));
         return poll;
