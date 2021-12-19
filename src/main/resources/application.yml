@@ -14,5 +14,5 @@ spring:
 
 resource-server: "http://localhost:8081"
 web-socket-config:
-  endpoint: 'chat'
+  endpoint: '/chat'
   cors: '*'

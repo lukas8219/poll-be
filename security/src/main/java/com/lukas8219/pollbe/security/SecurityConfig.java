@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityFilter filter;
-    @Value("${web-socket-endpoint}")
+    @Value("${web-socket-config.endpoint}")
     private String WEB_SOCKET_ENDPOINT;
 
     @Override

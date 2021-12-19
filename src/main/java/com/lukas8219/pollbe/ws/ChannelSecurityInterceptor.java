@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ChannelSecurityInterceptor implements ChannelInterceptor {
 
-    private final String USERNAME_HEADER = "login";
     private final String PASSWORD_HEADER = "password";
     private final AuthenticationFacade authenticationFacade;
 
@@ -28,15 +27,14 @@ public class ChannelSecurityInterceptor implements ChannelInterceptor {
         final StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
         if (StompCommand.CONNECT == accessor.getCommand()) {
-            final String username = accessor.getFirstNativeHeader(USERNAME_HEADER);
-            final String password = accessor.getFirstNativeHeader(PASSWORD_HEADER);
-            final var user = authenticationFacade.authenticate(username, password);
+            final String jwt = accessor.getFirstNativeHeader(PASSWORD_HEADER);
+            final var user = authenticationFacade.authenticateByWebSocket(jwt);
             accessor.setUser(user);
         }
 
         if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
-            var user = (Authentication) accessor.getUser();
-            var userDetails = (PollUserDetails) user.getPrincipal();
+            final var user = (Authentication) accessor.getUser();
+            final var userDetails = (PollUserDetails) user.getPrincipal();
             if (!accessor.getDestination().contains(userDetails.getId().toString())) {
                 throw new ForbiddenException();
             }
