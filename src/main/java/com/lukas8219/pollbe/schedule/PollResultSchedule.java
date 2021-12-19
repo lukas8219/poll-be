@@ -15,7 +15,7 @@ public class PollResultSchedule {
 
     private final PollResultReportService reportService;
 
-    //@Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     public void reportPollResult() {
         log.info("Running schedule at [{}]", LocalDateTime.now());
         reportService.reportPollResults();
