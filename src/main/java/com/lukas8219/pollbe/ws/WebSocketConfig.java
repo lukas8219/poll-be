@@ -15,10 +15,10 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${web-socket.endpoint}")
+    @Value("${web-socket-config.endpoint}")
     private String WEB_SOCKET_ENDPOINT;
 
-    @Value("${web-socket.cors}")
+    @Value("${web-socket-config.cors}")
     private String ALLOWED_ORIGINS;
 
     private final ChannelSecurityInterceptor interceptor;
