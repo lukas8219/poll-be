@@ -15,8 +15,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${web-socket-endpoint}")
+    @Value("${web-socket.endpoint}")
     private String WEB_SOCKET_ENDPOINT;
+
+    @Value("${web-socket.cors}")
+    private String ALLOWED_ORIGINS;
 
     private final ChannelSecurityInterceptor interceptor;
 
@@ -29,8 +32,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(WEB_SOCKET_ENDPOINT);
-        registry.addEndpoint(WEB_SOCKET_ENDPOINT).withSockJS();
+        registry.addEndpoint(WEB_SOCKET_ENDPOINT).setAllowedOrigins(ALLOWED_ORIGINS);
+        registry.addEndpoint(WEB_SOCKET_ENDPOINT).setAllowedOrigins(ALLOWED_ORIGINS).withSockJS();
     }
 
     @Override

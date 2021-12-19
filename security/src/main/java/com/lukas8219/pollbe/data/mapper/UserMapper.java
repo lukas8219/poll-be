@@ -15,6 +15,7 @@ public interface UserMapper {
             @Mapping(target = "email", source = "email"),
             @Mapping(target = "phoneNumber", source = "phoneNumber"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "id", source = "id")
     })
     UserDTO toDTO(User source);
 

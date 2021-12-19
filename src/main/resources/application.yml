@@ -13,4 +13,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 resource-server: "http://localhost:8081"
-web-socket-endpoint: '/chat'
+web-socket-config:
+  endpoint: 'chat'
+  cors: '*'
