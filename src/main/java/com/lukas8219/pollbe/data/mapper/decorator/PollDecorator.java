@@ -38,12 +38,16 @@ public abstract class PollDecorator implements PollMapper {
     }
 
     private VoteDecisionEnum getVoteDecision(Poll poll, PollUserDetails userDetails) {
-        return poll.getVotes()
-                .stream()
-                .filter(vote -> vote.getVotedBy().equals(userDetails.getId()))
-                .map(PollVote::getDecision)
-                .findFirst()
-                .orElse(ABSTENTION);
+        if(!CollectionUtils.isEmpty(poll.getVotes())){
+            return poll.getVotes()
+                    .stream()
+                    .filter(vote -> vote.getVotedBy().equals(userDetails.getId()))
+                    .map(PollVote::getDecision)
+                    .findFirst()
+                    .orElse(ABSTENTION);
+        } else {
+            return ABSTENTION;
+        }
     }
 
     private Long countVotes(Poll poll, VoteDecisionEnum decision) {

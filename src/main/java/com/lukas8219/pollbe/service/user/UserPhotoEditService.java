@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class UserPhotoEditService {
 
     private final FileStorageService fileStorageService;
 
-    private final String DEFAULT_PHOTO_NAME = "profile.%s";
+    private final String DEFAULT_PHOTO_NAME = "profile-%s.%s";
 
     @Transactional
     public UserPhotoDTO edit(PollUserDetails userDetails, MultipartFile file) {
@@ -59,7 +60,8 @@ public class UserPhotoEditService {
         try {
             var bytes = file.getBytes();
             var extension = getExtension(file);
-            var fileName = String.format(DEFAULT_PHOTO_NAME, extension);
+            var fileName = String.format(DEFAULT_PHOTO_NAME,
+                    UUID.randomUUID(), extension);
             return new FileDTO(bytes, folderName, fileName);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
