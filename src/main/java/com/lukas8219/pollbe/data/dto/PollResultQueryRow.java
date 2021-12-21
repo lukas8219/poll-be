@@ -11,7 +11,8 @@ import lombok.Setter;
 public class PollResultQueryRow {
 
     private Long id;
-    private VoteDecisionEnum decision;
-    private Long count;
+    private VoteDecisionEnum voteDecision;
+    private Long votedBy;
+    private String userEmail;
 
 }

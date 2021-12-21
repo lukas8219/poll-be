@@ -2,9 +2,10 @@ package com.lukas8219.pollbe.repository;
 
 import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollVote;
+import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.data.dto.PollResultDTO;
 import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
-import com.lukas8219.pollbe.data.mapper.PollMapper;
+import com.lukas8219.pollbe.data.mapper.PollResultMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,16 +13,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.JoinType;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
 public class PollResultDaoImp implements PollResultDao {
 
     private final EntityManager entityManager;
-    private final PollMapper mapper;
+    private final PollResultMapper mapper;
 
     @Override
     public List<PollResultDTO> getAllFinishedPolls() {
@@ -29,12 +28,14 @@ public class PollResultDaoImp implements PollResultDao {
         var cb = entityManager.getCriteriaBuilder();
         var query = cb.createQuery(PollResultQueryRow.class);
         var from = query.from(Poll.class);
-        var votes = from.<Poll, PollVote>join("votes", JoinType.INNER);
+        var vote = from.<Poll, PollVote>join("votes", JoinType.INNER);
+        var user = from.<PollVote, User>join("user", JoinType.INNER);
 
         query.multiselect(
                 from.get("id"),
-                votes.get("decision"),
-                cb.count(votes.get("decision"))
+                vote.get("decision"),
+                user.get("id"),
+                user.get("email")
         );
 
         query.where(
@@ -44,18 +45,15 @@ public class PollResultDaoImp implements PollResultDao {
 
         query.groupBy(
                 from.get("id"),
-                votes.get("decision")
+                vote.get("decision"),
+                user.get("id"),
+                user.get("email")
         );
 
         //TODO Never do this Horror
         var result = entityManager.createQuery(query)
                 .getResultList();
-        var resultDTO = mapper.toReportList(result);
-
-        return resultDTO.stream()
-                .map(x -> mapper.toReportList(getUsersThatVoted(x.getPollId()), x))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        return mapper.toDTO(result);
     }
 
     @Override

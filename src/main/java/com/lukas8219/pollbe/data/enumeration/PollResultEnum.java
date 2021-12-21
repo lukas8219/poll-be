@@ -14,17 +14,21 @@ public enum PollResultEnum {
             return PollResultEnum.OCCURRING;
         }
 
-        if(expiresAt.isBefore(LocalDateTime.now())){
-            if (favor.equals(against)) {
-                return TIE;
-            }
-            if (favor > against) {
-                return APPROVED;
-            } else {
-                return REFUSED;
-            }
+        if (expiresAt.isBefore(LocalDateTime.now())) {
+            return calculate(against, favor);
         } else {
             return null;
+        }
+    }
+
+    public static PollResultEnum calculate(Long against, Long favor) {
+        if (favor.equals(against)) {
+            return TIE;
+        }
+        if (favor > against) {
+            return APPROVED;
+        } else {
+            return REFUSED;
         }
     }
 }
