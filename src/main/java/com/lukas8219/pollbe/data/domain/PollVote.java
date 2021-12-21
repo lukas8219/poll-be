@@ -31,4 +31,5 @@ public class PollVote {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "voted_by", nullable = false)
     private User votedBy;
+
 }

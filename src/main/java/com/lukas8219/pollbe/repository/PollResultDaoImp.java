@@ -25,8 +25,9 @@ public class PollResultDaoImp implements PollResultDao {
         var cb = entityManager.getCriteriaBuilder();
         var query = cb.createQuery(PollResultQueryRow.class);
         var from = query.from(Poll.class);
-        var vote = from.<Poll, PollVote>join("votes", JoinType.INNER);
-        var user = from.<PollVote, User>join("user", JoinType.INNER);
+        var vote = from.<Poll, PollVote>join(Poll_.VOTES, JoinType.INNER);
+        var user = vote.<PollVote, User>join(PollVote_.VOTED_BY, JoinType.INNER);
+
 
         query.multiselect(
                 from.get(Poll_.ID),
