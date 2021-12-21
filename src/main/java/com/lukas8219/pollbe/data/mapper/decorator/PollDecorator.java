@@ -19,8 +19,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.ABSTENTION;
-
 @Component
 public abstract class PollDecorator implements PollMapper {
 
@@ -44,9 +42,9 @@ public abstract class PollDecorator implements PollMapper {
                     .filter(vote -> vote.getVotedBy().equals(userDetails.getId()))
                     .map(PollVote::getDecision)
                     .findFirst()
-                    .orElse(ABSTENTION);
+                    .orElse(null);
         } else {
-            return ABSTENTION;
+            return null;
         }
     }
 
