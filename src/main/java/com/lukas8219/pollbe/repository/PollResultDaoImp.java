@@ -1,8 +1,6 @@
 package com.lukas8219.pollbe.repository;
 
-import com.lukas8219.pollbe.data.domain.Poll;
-import com.lukas8219.pollbe.data.domain.PollVote;
-import com.lukas8219.pollbe.data.domain.User;
+import com.lukas8219.pollbe.data.domain.*;
 import com.lukas8219.pollbe.data.dto.PollResultDTO;
 import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
 import com.lukas8219.pollbe.data.mapper.PollResultMapper;
@@ -24,7 +22,6 @@ public class PollResultDaoImp implements PollResultDao {
 
     @Override
     public List<PollResultDTO> getAllFinishedPolls() {
-        //TODO refactor to proper SQL in misc (POLL_REPORT_SQL.sql) AND proper object
         var cb = entityManager.getCriteriaBuilder();
         var query = cb.createQuery(PollResultQueryRow.class);
         var from = query.from(Poll.class);
@@ -32,25 +29,24 @@ public class PollResultDaoImp implements PollResultDao {
         var user = from.<PollVote, User>join("user", JoinType.INNER);
 
         query.multiselect(
-                from.get("id"),
-                vote.get("decision"),
-                user.get("id"),
-                user.get("email")
+                from.get(Poll_.ID),
+                vote.get(PollVote_.DECISION),
+                user.get(User_.ID),
+                user.get(User_.EMAIL)
         );
 
         query.where(
-                cb.lessThan(from.get("expiresAt"), LocalDateTime.now()),
-                cb.isNull(from.get("reportedAt"))
+                cb.lessThan(from.get(Poll_.EXPIRES_AT), LocalDateTime.now()),
+                cb.isNull(from.get(Poll_.REPORTED_AT))
         );
 
         query.groupBy(
-                from.get("id"),
-                vote.get("decision"),
-                user.get("id"),
-                user.get("email")
+                from.get(Poll_.ID),
+                vote.get(PollVote_.DECISION),
+                user.get(User_.ID),
+                user.get(User_.EMAIL)
         );
 
-        //TODO Never do this Horror
         var result = entityManager.createQuery(query)
                 .getResultList();
         return mapper.toDTO(result);
@@ -62,25 +58,12 @@ public class PollResultDaoImp implements PollResultDao {
         var cb = entityManager.getCriteriaBuilder();
         var update = cb.createCriteriaUpdate(Poll.class);
         var from = update.from(Poll.class);
-        update.set("reportedAt", LocalDateTime.now());
+        update.set(Poll_.REPORTED_AT, LocalDateTime.now());
         update.where(
-                cb.lessThan(from.get("expiresAt"), LocalDateTime.now()),
-                cb.isNull(from.get("reportedAt"))
+                cb.lessThan(from.get(Poll_.EXPIRES_AT), LocalDateTime.now()),
+                cb.isNull(from.get(Poll_.REPORTED_AT))
         );
         entityManager.createQuery(update).executeUpdate();
-    }
-
-
-    private List<Long> getUsersThatVoted(Long pollId) {
-        var cb = entityManager.getCriteriaBuilder();
-        var query = cb.createQuery(Long.class);
-        var from = query.from(PollVote.class);
-        var poll = from.join("poll");
-        query.select(from.get("votedBy"));
-        query.where(cb.equal(poll.get("id"), pollId));
-        return entityManager.createQuery(query)
-                .getResultList();
-
     }
 
 }
