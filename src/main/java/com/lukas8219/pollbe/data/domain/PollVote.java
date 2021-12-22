@@ -28,8 +28,8 @@ public class PollVote {
     @Column(name = "voted_at")
     private LocalDateTime votedAt;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "voted_by", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "voted_by")
     private User votedBy;
 
 }

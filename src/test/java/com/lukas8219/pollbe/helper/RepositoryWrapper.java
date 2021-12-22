@@ -95,4 +95,10 @@ public class RepositoryWrapper implements InitializingBean {
             throw new RuntimeException("UserRepository is null. Please check the Bean setup.");
         }
     }
+
+    public void clean() {
+        voteRepository.deleteAll();
+        pollRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 }
