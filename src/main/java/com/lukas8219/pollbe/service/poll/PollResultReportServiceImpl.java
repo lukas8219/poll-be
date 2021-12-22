@@ -4,7 +4,7 @@ import com.lukas8219.pollbe.data.dto.PollResultDTO;
 import com.lukas8219.pollbe.repository.PollResultDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class PollResultReportServiceImpl implements PollResultReportService {
 
     private final PollResultDao resultDao;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
     @Override
     public void reportPollResults() {
