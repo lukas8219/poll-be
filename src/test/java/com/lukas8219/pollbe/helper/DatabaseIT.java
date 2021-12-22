@@ -16,8 +16,8 @@ public abstract class DatabaseIT {
     @Container
     protected static MySQLContainer database = new MySQLContainer("mysql:latest")
             .withDatabaseName("poll")
-            .withPassword("1234")
-            .withUsername("lucas");
+            .withPassword("root")
+            .withUsername("root");
 
     //TODO add reuse when necessary
 

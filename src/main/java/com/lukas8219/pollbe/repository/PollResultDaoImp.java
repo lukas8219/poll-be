@@ -53,7 +53,6 @@ public class PollResultDaoImp implements PollResultDao {
     }
 
     @Override
-    @Transactional
     public void updateReportedAtForPolls(List<Long> collect) {
         var cb = entityManager.getCriteriaBuilder();
         var update = cb.createCriteriaUpdate(Poll.class);
