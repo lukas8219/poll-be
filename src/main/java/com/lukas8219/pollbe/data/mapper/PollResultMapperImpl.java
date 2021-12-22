@@ -1,11 +1,10 @@
-package com.lukas8219.pollbe.data.decorator;
+package com.lukas8219.pollbe.data.mapper;
 
 import com.lukas8219.pollbe.data.dto.PollResultDTO;
 import com.lukas8219.pollbe.data.dto.PollResultQueryRow;
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
-import com.lukas8219.pollbe.data.mapper.PollResultMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,10 +13,8 @@ import java.util.stream.Collectors;
 import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.AGAINST;
 import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.FAVOR;
 
-public abstract class PollResultDecorator implements PollResultMapper {
-
-    @Autowired
-    private PollResultMapper delegate;
+@Component
+public class PollResultMapperImpl implements PollResultMapper {
 
     @Override
     public List<PollResultDTO> toDTO(List<PollResultQueryRow> result) {
