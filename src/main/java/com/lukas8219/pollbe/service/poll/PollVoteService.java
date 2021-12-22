@@ -6,8 +6,10 @@ import com.lukas8219.pollbe.data.dto.PollVoteDTO;
 import com.lukas8219.pollbe.data.mapper.PollVoteMapper;
 import com.lukas8219.pollbe.exception.AlreadyVotePollException;
 import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
+import com.lukas8219.pollbe.exception.UserNotFoundException;
 import com.lukas8219.pollbe.repository.PollRepository;
 import com.lukas8219.pollbe.repository.PollVoteRepository;
+import com.lukas8219.pollbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class PollVoteService {
 
     private final PollRepository pollRepository;
     private final PollVoteRepository voteRepository;
+    private final UserRepository userRepository;
 
     private final PollVoteMapper mapper;
 
@@ -32,7 +35,7 @@ public class PollVoteService {
             vote.setDecision(decision);
             vote.setVotedAt(LocalDateTime.now());
             vote.setPoll(pollRepository.findByIdAndExpiration(id).orElseThrow(PollExpiredOrNotFoundException::new));
-            vote.setVotedBy(userDetails.getId());
+            vote.setVotedBy(userRepository.findById(userDetails.getId()).orElseThrow(UserNotFoundException::new));
             return mapper.toDTO(voteRepository.save(vote));
         } else {
             throw new AlreadyVotePollException();

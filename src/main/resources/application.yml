@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 resource-server: "http://localhost:8081"
 web-socket-config:
