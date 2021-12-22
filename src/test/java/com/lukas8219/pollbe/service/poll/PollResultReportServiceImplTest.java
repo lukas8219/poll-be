@@ -30,7 +30,7 @@ class PollResultReportServiceImplTest {
 
     @Test
     public void sendMessageToProperUsers() {
-        var usersId = mockPollResultDao.getAllUsers().stream().map(MockUser::getId).collect(Collectors.toList());
+        var usersId = mockPollResultDao.getAllUsers().stream().map(user -> user.getId().toString()).collect(Collectors.toList());
         assertThat(messageTemplate.getUsersSent()).containsAll(usersId);
     }
 

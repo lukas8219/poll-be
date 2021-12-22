@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class MockSimpMessageTemplate<T> implements SimpMessageSendingOperations {
 
-    private final List<Long> usersSent = new ArrayList<>();
+    private final List<String> usersSent = new ArrayList<>();
     private final Class<T> payloadClass;
     private final String acceptedDestination;
 
@@ -22,7 +22,7 @@ public class MockSimpMessageTemplate<T> implements SimpMessageSendingOperations 
         this.acceptedDestination = acceptedDestination;
     }
 
-    public List<Long> getUsersSent() {
+    public List<String> getUsersSent() {
         return usersSent;
     }
 
@@ -32,14 +32,14 @@ public class MockSimpMessageTemplate<T> implements SimpMessageSendingOperations 
 
     @Override
     public void convertAndSendToUser(String user, String destination, Object payload) throws MessagingException {
-        usersSent.add(Long.valueOf(user));
+        usersSent.add(user);
 
         if (payload == null) {
             fail("Payload cannot be Null");
         }
 
         if (!payload.getClass().equals(payloadClass)) {
-            fail("Payload should be an Instance of PollResultDTO");
+            fail(String.format("Payload should be an Instance of %s", payloadClass.getName()));
         }
 
         if (!acceptedDestination.equals(destination)) {
