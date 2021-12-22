@@ -28,7 +28,6 @@ public class PollResultDaoImp implements PollResultDao {
         var vote = from.<Poll, PollVote>join(Poll_.VOTES, JoinType.INNER);
         var user = vote.<PollVote, User>join(PollVote_.VOTED_BY, JoinType.INNER);
 
-
         query.multiselect(
                 from.get(Poll_.ID),
                 vote.get(PollVote_.DECISION),
