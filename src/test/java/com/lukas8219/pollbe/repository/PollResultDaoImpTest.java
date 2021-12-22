@@ -1,6 +1,7 @@
 package com.lukas8219.pollbe.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.mapper.PollResultMapperImpl_;
 import com.lukas8219.pollbe.helper.RepositoryWrapper;
 import com.lukas8219.pollbe.helper.UserBuilder;
@@ -14,6 +15,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 
+import static com.lukas8219.pollbe.data.enumeration.PollResultEnum.APPROVED;
+import static com.lukas8219.pollbe.data.enumeration.PollResultEnum.REFUSED;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -60,5 +64,31 @@ class PollResultDaoImpTest {
         repository.findAllUser();
     }
 
+
+    @Test
+    public void shouldReturnProperAmountOfVotes() {
+        var size = subject.getAllFinishedPolls().size();
+        assertThat(size).isEqualTo(6);
+    }
+
+    @Test
+    public void pollWithIdOneShouldBeApproved() {
+        pollWithIdShouldBe(1L, APPROVED);
+    }
+
+    @Test
+    public void pollWithIdTwoShouldBeRefused(){
+        pollWithIdShouldBe(2L, REFUSED);
+    }
+
+    public void pollWithIdShouldBe(Long id, PollResultEnum resultEnum){
+        var vote = subject.getAllFinishedPolls().stream()
+                .filter(result -> result.getPollId() == id)
+                .findFirst()
+                .orElse(null);
+
+        assertThat(vote).isNotNull();
+        assertThat(vote.getResult()).isEqualTo(resultEnum);
+    }
 
 }
