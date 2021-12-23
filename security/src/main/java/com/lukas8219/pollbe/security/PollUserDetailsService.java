@@ -4,12 +4,14 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
+@Primary
 @RequiredArgsConstructor
 public class PollUserDetailsService implements UserDetailsService {
 
@@ -23,7 +25,7 @@ public class PollUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails toUserDetail(User user) {
-        return new PollUserDetails(user.getId(),user.getEmail(), user.getPassword());
+        return new PollUserDetails(user.getId(), user.getEmail(), user.getPassword());
     }
 
 }

@@ -18,19 +18,19 @@ public class UserApi {
     private final UserFacade facade;
 
     @GetMapping
-    public UserDTO getUser(@AuthenticationPrincipal PollUserDetails userDetails){
+    public UserDTO getUser(@AuthenticationPrincipal PollUserDetails userDetails) {
         return facade.getUser(userDetails);
     }
 
     @PutMapping
     public UserDTO editUser(@AuthenticationPrincipal PollUserDetails userDetails,
-                            @RequestBody UserEditDTO dto){
+                            @RequestBody UserEditDTO dto) {
         return facade.edit(userDetails, dto);
     }
 
     @PostMapping("photo")
     public UserPhotoDTO editPhoto(@AuthenticationPrincipal PollUserDetails userDetails,
-                                  @RequestPart MultipartFile file){
+                                  @RequestPart MultipartFile file) {
         return facade.editPhoto(userDetails, file);
     }
 }
