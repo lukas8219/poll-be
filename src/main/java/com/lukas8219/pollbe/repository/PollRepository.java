@@ -13,8 +13,7 @@ public interface PollRepository extends CrudRepository<Poll, Long> {
 
 
     @Query("FROM Poll WHERE id = :id AND expiresAt > NOW()")
-    Optional<Poll> findByIdAndExpiration(Long id);
+    Optional<Poll> findByIdAndNotExpired(Long id);
 
     List<Poll> findAll();
-
 }

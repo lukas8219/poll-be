@@ -2,6 +2,7 @@ package com.lukas8219.pollbe.exception;
 
 import com.lukas8219.pollbe.data.dto.ErrorDTO;
 import com.lukas8219.pollbe.data.dto.FieldErrorDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Slf4j
 public class ControllerAdviceHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -45,6 +47,7 @@ public class ControllerAdviceHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorDTO> handlePollException(CustomException exception){
+        log.error(exception.getLocalizedMessage(), exception);
         return ResponseEntity
                 .status(exception.status())
                 .body(
@@ -58,6 +61,7 @@ public class ControllerAdviceHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDTO> handlePollException(Exception exception){
+        log.error(exception.getLocalizedMessage(), exception);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(

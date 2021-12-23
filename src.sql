@@ -1,0 +1,1 @@
+SELECT * FROM poll.users;
