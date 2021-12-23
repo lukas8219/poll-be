@@ -25,7 +25,7 @@ class PollResultReportServiceImplTest {
 
     @Test
     public void sendMessagesToAllUsers() {
-        assertThat(messageTemplate.getUsersSent().size()).isEqualTo(6);
+        assertThat(messageTemplate.getUsersSent().size()).isEqualTo(mockPollResultDao.getAllFinishedPolls().size());
     }
 
     @Test
