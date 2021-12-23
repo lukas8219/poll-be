@@ -4,7 +4,7 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.dto.CreatePollDTO;
 import com.lukas8219.pollbe.data.dto.PollDTO;
 import com.lukas8219.pollbe.data.dto.PollVoteDTO;
-import com.lukas8219.pollbe.service.poll.PollFacadeImpl;
+import com.lukas8219.pollbe.service.poll.PollFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PollApi {
 
-    private final PollFacadeImpl facade;
+    private final PollFacade facade;
 
     @GetMapping
     public List<PollDTO> getAll(@AuthenticationPrincipal PollUserDetails userDetails) {

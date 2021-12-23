@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PollFacadeImpl implements PollFacade {
 
-    private final PollCreateServiceImpl createService;
+    private final PollCreateService createService;
     private final PollVoteService voteService;
     private final PollGetService getService;
 
