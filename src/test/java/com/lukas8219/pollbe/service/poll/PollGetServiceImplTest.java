@@ -5,7 +5,7 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.mapper.PollMapper;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl_;
-import com.lukas8219.pollbe.exception.PollNotFoundException;
+import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
 import com.lukas8219.pollbe.helper.PollRepositoryStub;
 import com.lukas8219.pollbe.helper.UserDetailsFactory;
 import org.junit.jupiter.api.Assertions;
@@ -61,12 +61,12 @@ class PollGetServiceImplTest {
     @Test
     public void whenGetByExpiredShouldReturnProperException() {
         var poll = createPoll(LocalDateTime.now().minusDays(1L));
-        Assertions.assertThrows(PollNotFoundException.class, () -> subject.get(poll.getId(), USER));
+        Assertions.assertThrows(PollExpiredOrNotFoundException.class, () -> subject.get(poll.getId(), USER));
     }
 
     @Test
     public void whenGetByUnexistentShouldReturnProperException() {
-        Assertions.assertThrows(PollNotFoundException.class, () -> subject.get(990L, USER));
+        Assertions.assertThrows(PollExpiredOrNotFoundException.class, () -> subject.get(990L, USER));
     }
 
 }

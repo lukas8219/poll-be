@@ -3,7 +3,7 @@ package com.lukas8219.pollbe.service.poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.dto.PollDTO;
 import com.lukas8219.pollbe.data.mapper.PollMapper;
-import com.lukas8219.pollbe.exception.PollNotFoundException;
+import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
 import com.lukas8219.pollbe.repository.PollRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class PollGetServiceImpl implements PollGetService {
     public PollDTO get(Long id, PollUserDetails userDetails) {
         return repository.findByIdAndNotExpired(id)
                 .map(poll -> mapper.toDTO(poll, userDetails))
-                .orElseThrow(PollNotFoundException::new);
+                .orElseThrow(PollExpiredOrNotFoundException::new);
     }
 
     public List<PollDTO> getAll(PollUserDetails userDetails) {
