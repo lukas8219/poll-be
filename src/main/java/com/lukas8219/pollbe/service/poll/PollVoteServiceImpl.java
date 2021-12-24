@@ -2,10 +2,7 @@ package com.lukas8219.pollbe.service.poll;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.PollVote;
-import com.lukas8219.pollbe.data.dto.PollVoteDTO;
-import com.lukas8219.pollbe.data.mapper.PollVoteMapper;
 import com.lukas8219.pollbe.exception.AlreadyVotePollException;
-import com.lukas8219.pollbe.repository.UserRepository;
 import com.lukas8219.pollbe.repository.gateway.PollVoteGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +17,8 @@ import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.FAVOR;
 public class PollVoteServiceImpl implements PollVoteService {
 
     private final PollVoteGateway voteGateway;
-    private final PollVoteMapper mapper;
 
-    public PollVoteDTO vote(Long id, boolean approved, PollUserDetails userDetails) {
+    public PollVote vote(Long id, boolean approved, PollUserDetails userDetails) {
         var decision = approved ? FAVOR : AGAINST;
         if (!voteGateway.existsByPollIdAndVotedBy(id, userDetails.getId())) {
             var vote = new PollVote();
@@ -30,7 +26,7 @@ public class PollVoteServiceImpl implements PollVoteService {
             vote.setVotedAt(LocalDateTime.now());
             vote.setPoll(voteGateway.findPollByIdAndNotExpired(id));
             vote.setVotedBy(voteGateway.findVotingUserById(userDetails.getId()));
-            return mapper.toDTO(voteGateway.save(vote));
+            return voteGateway.save(vote);
         } else {
             throw new AlreadyVotePollException();
         }

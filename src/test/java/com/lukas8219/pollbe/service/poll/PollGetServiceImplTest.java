@@ -6,8 +6,8 @@ import com.lukas8219.pollbe.data.mapper.PollMapper;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl_;
 import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
-import com.lukas8219.pollbe.helper.PollRepositoryStub;
-import com.lukas8219.pollbe.helper.UserDetailsFactory;
+import com.lukas8219.pollbe.helper.factory.UserDetailsFactory;
+import com.lukas8219.pollbe.helper.stub.PollRepositoryStub;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,9 +36,7 @@ class PollGetServiceImplTest {
     @BeforeEach
     public void setup() {
         repository = new PollRepositoryStub();
-        subject = new PollGetServiceImpl(
-                repository, pollMapper
-        );
+        subject = new PollGetServiceImpl(repository);
     }
 
     public Poll createPoll() {

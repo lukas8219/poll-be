@@ -1,4 +1,4 @@
-package com.lukas8219.pollbe.service.poll;
+package com.lukas8219.pollbe.helper.mock;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessagingException;

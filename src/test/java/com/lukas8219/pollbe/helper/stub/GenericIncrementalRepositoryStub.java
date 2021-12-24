@@ -1,4 +1,4 @@
-package com.lukas8219.pollbe.helper;
+package com.lukas8219.pollbe.helper.stub;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,10 +1,10 @@
 package com.lukas8219.pollbe.service.poll;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
-import com.lukas8219.pollbe.data.dto.PollVoteDTO;
+import com.lukas8219.pollbe.data.domain.PollVote;
 
 public interface PollVoteService {
 
-    PollVoteDTO vote(Long id, boolean approved, PollUserDetails userDetails);
+    PollVote vote(Long id, boolean approved, PollUserDetails userDetails);
 
 }

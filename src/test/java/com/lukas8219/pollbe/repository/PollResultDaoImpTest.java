@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.mapper.PollResultMapperImpl;
 import com.lukas8219.pollbe.helper.*;
+import com.lukas8219.pollbe.helper.wrapper.RepositoryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

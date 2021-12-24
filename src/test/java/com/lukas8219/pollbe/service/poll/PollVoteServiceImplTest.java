@@ -4,23 +4,17 @@ import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
-import com.lukas8219.pollbe.data.mapper.PollVoteMapper;
-import com.lukas8219.pollbe.data.mapper.PollVoteMapperImpl;
 import com.lukas8219.pollbe.exception.AlreadyVotePollException;
 import com.lukas8219.pollbe.exception.PollExpiredOrNotFoundException;
-import com.lukas8219.pollbe.helper.UserDetailsFactory;
+import com.lukas8219.pollbe.helper.factory.UserDetailsFactory;
 import com.lukas8219.pollbe.repository.gateway.PollVoteGatewayImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 
@@ -29,15 +23,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
-@Import({
-        PollVoteMapperImpl.class,
-})
 class PollVoteServiceImplTest {
 
     private final PollUserDetails USER = UserDetailsFactory.of(1L, "1@email");
-    @Autowired
-    private PollVoteMapper mapper;
     private PollVoteServiceImpl subject;
 
     @Mock
@@ -46,9 +34,7 @@ class PollVoteServiceImplTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        subject = new PollVoteServiceImpl(
-                voteGateway, mapper
-        );
+        subject = new PollVoteServiceImpl(voteGateway);
     }
 
     @Test
@@ -72,7 +58,7 @@ class PollVoteServiceImplTest {
         user.setId(1L);
 
         when(voteGateway.existsByPollIdAndVotedBy(any(), any())).thenReturn(false);
-        when((voteGateway.findPollByIdAndNotExpired(anyLong()))).thenReturn(poll);
+        when(voteGateway.findPollByIdAndNotExpired(anyLong())).thenReturn(poll);
         when(voteGateway.findVotingUserById(anyLong())).thenReturn(user);
         when(voteGateway.save(any())).thenAnswer(inv -> inv.getArgument(0));
 

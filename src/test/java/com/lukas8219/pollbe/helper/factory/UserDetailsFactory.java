@@ -1,4 +1,4 @@
-package com.lukas8219.pollbe.helper;
+package com.lukas8219.pollbe.helper.factory;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 
