@@ -1,10 +1,10 @@
 package com.lukas8219.pollbe.service.poll;
 
 import com.lukas8219.pollbe.data.dto.PollResultDTO;
+import com.lukas8219.pollbe.helper.mock.MockPollResultDao;
+import com.lukas8219.pollbe.helper.mock.MockSimpMessageTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +30,7 @@ class PollResultReportServiceImplTest {
 
     @Test
     public void sendMessageToProperUsers() {
-        var usersId = mockPollResultDao.getAllUsers().stream().map(user -> user.getId().toString()).collect(Collectors.toList());
+        var usersId = mockPollResultDao.getAllUsersAs(user -> user.getId().toString());
         assertThat(messageTemplate.getUsersSent()).containsAll(usersId);
     }
 
