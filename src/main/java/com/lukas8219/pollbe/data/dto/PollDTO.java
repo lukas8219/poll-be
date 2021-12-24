@@ -19,5 +19,6 @@ public class PollDTO {
     private Long against;
     private PollResultEnum result;
     private VoteDecisionEnum vote;
+    private Long createdBy;
 
 }

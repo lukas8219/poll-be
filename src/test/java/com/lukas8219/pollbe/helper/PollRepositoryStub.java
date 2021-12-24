@@ -31,10 +31,23 @@ public class PollRepositoryStub extends GenericIncrementalRepositoryStub<Poll, L
 
     @Override
     public <S extends Poll> S save(S entity) {
-        database.add(entity);
         if (entity.getId() == null) {
-            entity.setId((long) database.size());
+            database.add(entity);
+            entity.setId((long) database.size() - 1);
+        } else {
+            database.set(Math.toIntExact(entity.getId()), entity);
         }
         return entity;
+    }
+
+    @Override
+    public Optional<Poll> findById(Long aLong) {
+        Poll poll;
+        if(aLong >= database.size()){
+            poll = null;
+        } else {
+            poll = database.get(Math.toIntExact(aLong));
+        }
+        return Optional.ofNullable(poll);
     }
 }
