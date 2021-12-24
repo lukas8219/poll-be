@@ -4,8 +4,6 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.data.domain.UserPhoto;
 import com.lukas8219.pollbe.data.dto.FileDTO;
-import com.lukas8219.pollbe.data.dto.UserPhotoDTO;
-import com.lukas8219.pollbe.data.mapper.UserMapper;
 import com.lukas8219.pollbe.exception.UnprocessableEntityException;
 import com.lukas8219.pollbe.exception.UserNotFoundException;
 import com.lukas8219.pollbe.repository.UserPhotoRepository;
@@ -16,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -24,17 +21,16 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserPhotoEditServiceImpl implements UserPhotoEditService{
+public class UserPhotoEditServiceImpl implements UserPhotoEditService {
 
     private final UserRepository repository;
     private final UserPhotoRepository userPhotoRepository;
-    private final UserMapper mapper;
 
     private final FileStorageService fileStorageService;
 
     private final String DEFAULT_PHOTO_NAME = "profile-%s.%s";
 
-    public UserPhotoDTO edit(PollUserDetails userDetails, MultipartFile file) {
+    public UserPhoto edit(PollUserDetails userDetails, MultipartFile file) {
         var user = repository.findById(userDetails.getId()).orElseThrow(UserNotFoundException::new);
 
         if (user.getPhoto() != null) {
@@ -50,9 +46,8 @@ public class UserPhotoEditServiceImpl implements UserPhotoEditService{
         photo.setUploadedAt(LocalDateTime.now());
 
         fileStorageService.save(dto);
-        userPhotoRepository.save(photo);
 
-        return mapper.toPhotoDTO(photo);
+        return userPhotoRepository.save(photo);
     }
 
     private FileDTO createFileDTO(MultipartFile file, String folderName) {
@@ -70,7 +65,7 @@ public class UserPhotoEditServiceImpl implements UserPhotoEditService{
 
     private String getExtension(MultipartFile file) {
         var original = file.getOriginalFilename();
-        var idx = original.lastIndexOf(".")+1;
+        var idx = original.lastIndexOf(".") + 1;
         return original.substring(idx);
     }
 

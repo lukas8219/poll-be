@@ -4,6 +4,7 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.dto.UserDTO;
 import com.lukas8219.pollbe.data.dto.UserEditDTO;
 import com.lukas8219.pollbe.data.dto.UserPhotoDTO;
+import com.lukas8219.pollbe.data.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,15 +17,20 @@ public class UserFacadeImpl implements UserFacade {
     private final UserPhotoEditService photoEditService;
     private final UserGetService getService;
 
+    private final UserMapper mapper;
+
     public UserDTO edit(PollUserDetails userDetails, UserEditDTO dto) {
-        return editService.edit(userDetails, dto);
+        var result = editService.edit(userDetails, dto);
+        return mapper.toDTO(result);
     }
 
     public UserPhotoDTO editPhoto(PollUserDetails userDetails, MultipartFile file) {
-        return photoEditService.edit(userDetails, file);
+        var dto = photoEditService.edit(userDetails, file);
+        return mapper.toPhotoDTO(dto);
     }
 
     public UserDTO getUser(PollUserDetails userDetails) {
-        return getService.getUser(userDetails);
+        var dto = getService.getUser(userDetails.getId());
+        return mapper.toDTO(dto);
     }
 }
