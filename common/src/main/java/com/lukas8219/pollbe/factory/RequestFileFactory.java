@@ -1,4 +1,4 @@
-package com.lukas8219.pollbe.data.domain;
+package com.lukas8219.pollbe.factory;
 
 import com.lukas8219.pollbe.data.interfaces.RequestFile;
 import org.springframework.web.multipart.MultipartFile;

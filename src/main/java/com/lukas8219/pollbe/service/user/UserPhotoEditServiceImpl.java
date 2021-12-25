@@ -52,8 +52,7 @@ public class UserPhotoEditServiceImpl implements UserPhotoEditService {
 
         var bytes = file.getBytes();
         var extension = file.getExtension();
-        var fileName = String.format(DEFAULT_PHOTO_NAME,
-                UUID.randomUUID(), extension);
+        var fileName = String.format(DEFAULT_PHOTO_NAME, UUID.randomUUID(), extension);
         return new FileDTO(bytes, folderName, fileName);
     }
 
