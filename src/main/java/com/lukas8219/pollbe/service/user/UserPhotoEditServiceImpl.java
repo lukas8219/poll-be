@@ -4,7 +4,7 @@ import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.data.domain.UserPhoto;
 import com.lukas8219.pollbe.data.dto.FileDTO;
-import com.lukas8219.pollbe.exception.UnprocessableEntityException;
+import com.lukas8219.pollbe.data.interfaces.RequestFile;
 import com.lukas8219.pollbe.exception.UserNotFoundException;
 import com.lukas8219.pollbe.repository.UserPhotoRepository;
 import com.lukas8219.pollbe.repository.UserRepository;
@@ -12,9 +12,7 @@ import com.lukas8219.pollbe.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -30,7 +28,7 @@ public class UserPhotoEditServiceImpl implements UserPhotoEditService {
 
     private final String DEFAULT_PHOTO_NAME = "profile-%s.%s";
 
-    public UserPhoto edit(PollUserDetails userDetails, MultipartFile file) {
+    public UserPhoto edit(PollUserDetails userDetails, RequestFile file) {
         var user = repository.findById(userDetails.getId()).orElseThrow(UserNotFoundException::new);
 
         if (user.getPhoto() != null) {
@@ -50,23 +48,12 @@ public class UserPhotoEditServiceImpl implements UserPhotoEditService {
         return userPhotoRepository.save(photo);
     }
 
-    private FileDTO createFileDTO(MultipartFile file, String folderName) {
-        try {
-            var bytes = file.getBytes();
-            var extension = getExtension(file);
-            var fileName = String.format(DEFAULT_PHOTO_NAME,
-                    UUID.randomUUID(), extension);
-            return new FileDTO(bytes, folderName, fileName);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            throw new UnprocessableEntityException("Não foi possível salvar seu arquivo");
-        }
-    }
+    private FileDTO createFileDTO(RequestFile file, String folderName) {
 
-    private String getExtension(MultipartFile file) {
-        var original = file.getOriginalFilename();
-        var idx = original.lastIndexOf(".") + 1;
-        return original.substring(idx);
+        var bytes = file.getBytes();
+        var extension = file.getExtension();
+        var fileName = String.format(DEFAULT_PHOTO_NAME, UUID.randomUUID(), extension);
+        return new FileDTO(bytes, folderName, fileName);
     }
 
     private void deleteUserPhoto(User user) {
