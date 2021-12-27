@@ -9,6 +9,6 @@ public class PollNotFoundException extends CustomException{
     }
 
     public PollNotFoundException() {
-        super("Votação não encontrada");
+        super("poll.not.found");
     }
 }

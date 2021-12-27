@@ -9,6 +9,6 @@ public class UserInvalidException extends CustomException{
     }
 
     public UserInvalidException() {
-        super("Credenciais inválidas");
+        super("user.invalid.credentials");
     }
 }

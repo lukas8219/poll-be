@@ -9,6 +9,6 @@ public class ForbiddenException extends CustomException{
     }
 
     public ForbiddenException() {
-        super("Você não tem permissão para isso");
+        super("forbidden.exception");
     }
 }
