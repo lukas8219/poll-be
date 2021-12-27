@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class UserEmailAlreadyExists extends CustomException {
     public UserEmailAlreadyExists() {
-        super("Este email já existe!");
+        super("user.email.already.exists");
     }
 
     @Override

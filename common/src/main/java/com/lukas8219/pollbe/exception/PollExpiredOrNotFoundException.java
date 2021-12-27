@@ -10,7 +10,7 @@ public class PollExpiredOrNotFoundException extends CustomException {
     }
 
     public PollExpiredOrNotFoundException() {
-        super("Votação não existe ou expirada");
+        super("poll.expired.or.not.found");
     }
 
 }

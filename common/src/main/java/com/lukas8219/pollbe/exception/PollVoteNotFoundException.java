@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public class PollVoteNotFoundException extends CustomException {
 
     public PollVoteNotFoundException() {
-        super("Voto não encontrado");
+        super("poll.vote.not.found");
     }
 
     @Override

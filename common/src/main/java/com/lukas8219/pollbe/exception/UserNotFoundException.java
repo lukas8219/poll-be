@@ -9,6 +9,6 @@ public class UserNotFoundException extends CustomException{
     }
 
     public UserNotFoundException() {
-        super("Usuário não encontrado");
+        super("user.not.found.exception");
     }
 }
