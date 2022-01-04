@@ -15,11 +15,13 @@ public class HttpServerStartup implements CommandLineRunner {
     private final ApplicationEnvironment applicationEnvironment;
     @Value("${http-server-exec}")
     private String command;
+    @Value("${resource-server}")
+    private String resourceServer;
 
     @Override
     public void run(String... args) throws Exception {
         if (applicationEnvironment.getEnvironment() == EnvironmentEnum.DEVELOPMENT) {
-            log.info("Serving a Http-Server at localhost:8081 for Development");
+            log.info("Serving a Http-Server at {} for Development", resourceServer);
             var processCode = Runtime.getRuntime()
                     .exec(command).waitFor();
 

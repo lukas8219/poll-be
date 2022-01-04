@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 @Slf4j
 public class LocalFileStorageService implements FileStorageService {
 
-
     @Value("${resource-server}")
     private String resourceServer;
 
@@ -54,7 +53,7 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getLink(FileDTO file) {
-        return null;
+        return formatByUri(file.getFolderName(), file.getFolderName());
     }
 
     @Override
@@ -64,14 +63,18 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getLink(FileStorage file) {
-        return URI.create(String.format("%s/%s", resourceServer, formatPathFor(file.getFolder(), file.getFileName()))).toString();
+        return formatByUri(file.getFolder(), file.getFileName());
     }
 
-    public String formatPathFor(String folderName, String fileName) {
+    private String formatByUri(String folderName, String fileName) {
+        return URI.create(String.format("%s/%s", resourceServer, formatPathFor(folderName, fileName))).toString();
+    }
+
+    private String formatPathFor(String folderName, String fileName) {
         return String.format("%s/%s", createFormatFolder(folderName), fileName);
     }
 
-    public String createFormatFolder(String folderName) {
+    private String createFormatFolder(String folderName) {
         return String.format("%s/%s", "userPhotos", folderName);
     }
 }
