@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "app")
 @Getter
 @Setter
-public class ApplicationEnvironment {
+public class ApplicationConfiguration {
 
     private EnvironmentEnum environment;
+    private String resourceServer;
+    private String httpServerExec;
 
 }

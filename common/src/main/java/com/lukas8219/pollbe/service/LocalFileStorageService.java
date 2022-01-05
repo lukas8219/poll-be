@@ -1,8 +1,10 @@
 package com.lukas8219.pollbe.service;
 
+import com.lukas8219.pollbe.config.ApplicationConfiguration;
 import com.lukas8219.pollbe.data.domain.FileStorage;
 import com.lukas8219.pollbe.data.dto.FileDTO;
 import com.lukas8219.pollbe.exception.UnprocessableEntityException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,10 @@ import java.nio.file.Paths;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class LocalFileStorageService implements FileStorageService {
 
-
-    @Value("${resource-server}")
-    private String resourceServer;
+    private final ApplicationConfiguration configuration;
 
     @Override
     public void save(FileDTO file) {
@@ -54,7 +55,7 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getLink(FileDTO file) {
-        return null;
+        return formatByUri(file.getFolderName(), file.getFolderName());
     }
 
     @Override
@@ -64,14 +65,18 @@ public class LocalFileStorageService implements FileStorageService {
 
     @Override
     public String getLink(FileStorage file) {
-        return URI.create(String.format("%s/%s", resourceServer, formatPathFor(file.getFolder(), file.getFileName()))).toString();
+        return formatByUri(file.getFolder(), file.getFileName());
     }
 
-    public String formatPathFor(String folderName, String fileName) {
+    private String formatByUri(String folderName, String fileName) {
+        return URI.create(String.format("%s/%s", configuration.getResourceServer(), formatPathFor(folderName, fileName))).toString();
+    }
+
+    private String formatPathFor(String folderName, String fileName) {
         return String.format("%s/%s", createFormatFolder(folderName), fileName);
     }
 
-    public String createFormatFolder(String folderName) {
+    private String createFormatFolder(String folderName) {
         return String.format("%s/%s", "userPhotos", folderName);
     }
 }

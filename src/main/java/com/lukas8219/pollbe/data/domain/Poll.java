@@ -30,8 +30,9 @@ public class Poll {
     @OneToMany(mappedBy = "poll", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PollVote> votes;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 
     @Column(name = "reported_at")
     private LocalDateTime reportedAt;

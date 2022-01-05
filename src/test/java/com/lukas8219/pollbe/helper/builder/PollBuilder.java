@@ -21,7 +21,7 @@ public class PollBuilder {
         if (user == null || user.getId() == null) {
             throw new RuntimeException("Entidade não persistida. Inválida");
         }
-        this.poll.setCreatedBy(user.getId());
+        this.poll.setCreatedBy(user);
         this.poll.setDescription("Descrição");
         this.poll.setExpiresAt(LocalDateTime.now().minusMinutes(5));
         this.poll.setSubject("Assunto");
@@ -42,6 +42,11 @@ public class PollBuilder {
 
     public Poll buildExpired() {
         return this.poll;
+    }
+
+    public PollBuilder reportedAt(LocalDateTime reportedAt){
+        this.poll.setReportedAt(reportedAt);
+        return this;
     }
 
     public Poll build(LocalDateTime date) {
@@ -66,7 +71,7 @@ public class PollBuilder {
     }
 
     public PollBuilder createdBy(User user) {
-        this.poll.setCreatedBy(user.getId());
+        this.poll.setCreatedBy(user);
         return this;
     }
 

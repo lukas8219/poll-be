@@ -4,6 +4,7 @@ public enum EnvironmentEnum {
 
     DEVELOPMENT,
     STAGING,
-    PRODUCTION
+    PRODUCTION,
+    TEST
 
 }

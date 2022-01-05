@@ -26,5 +26,6 @@ public abstract class DatabaseIT {
         registry.add("spring.datasource.url", database::getJdbcUrl);
         registry.add("spring.datasource.password", database::getPassword);
         registry.add("spring.datasource.username", database::getUsername);
+        registry.add("spring.datasource.driver-class-name", database::getDriverClassName);
     }
 }
