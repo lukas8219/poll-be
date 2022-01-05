@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserVoteDTO {
 
+    private final Long id;
     private final String photo;
     private final String email;
     private final String name;

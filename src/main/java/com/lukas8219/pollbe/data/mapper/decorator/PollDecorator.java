@@ -103,7 +103,7 @@ public abstract class PollDecorator implements PollMapper {
                     if (x.getPhoto() != null) {
                         photo = fileStorageService.getLink(x.getPhoto());
                     }
-                    return new UserVoteDTO(photo, x.getEmail(), x.getName());
+                    return new UserVoteDTO(x.getId(), photo, x.getEmail(), x.getName());
                 })
                 .collect(Collectors.toList());
     }

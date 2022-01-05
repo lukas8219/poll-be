@@ -28,6 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -114,6 +115,14 @@ class PollGetServiceImplTest {
 
         assertThat(result.getAgainst().size()).isEqualTo(2);
         assertThat(result.getFavor().size()).isEqualTo(1);
+
+        assertThat(result.getAgainst().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(3L).getId()))).isTrue();
+        assertThat(result.getAgainst().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(2L).getId()))).isTrue();
+        assertThat(result.getFavor().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(1L).getId()))).isTrue();
+
+        assertThat(result.getFavor().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(3L).getId()))).isFalse();
+        assertThat(result.getFavor().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(2L).getId()))).isFalse();
+        assertThat(result.getAgainst().stream().anyMatch(x -> Objects.equals(x.getId(), users.get(1L).getId()))).isFalse();
 
         var details = result.getDetail();
 
