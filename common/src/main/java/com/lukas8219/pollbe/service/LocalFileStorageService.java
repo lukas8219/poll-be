@@ -1,8 +1,10 @@
 package com.lukas8219.pollbe.service;
 
+import com.lukas8219.pollbe.config.ApplicationConfiguration;
 import com.lukas8219.pollbe.data.domain.FileStorage;
 import com.lukas8219.pollbe.data.dto.FileDTO;
 import com.lukas8219.pollbe.exception.UnprocessableEntityException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,10 @@ import java.nio.file.Paths;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class LocalFileStorageService implements FileStorageService {
 
-    @Value("${resource-server}")
-    private String resourceServer;
+    private final ApplicationConfiguration configuration;
 
     @Override
     public void save(FileDTO file) {
@@ -67,7 +69,7 @@ public class LocalFileStorageService implements FileStorageService {
     }
 
     private String formatByUri(String folderName, String fileName) {
-        return URI.create(String.format("%s/%s", resourceServer, formatPathFor(folderName, fileName))).toString();
+        return URI.create(String.format("%s/%s", configuration.getResourceServer(), formatPathFor(folderName, fileName))).toString();
     }
 
     private String formatPathFor(String folderName, String fileName) {

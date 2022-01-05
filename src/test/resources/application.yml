@@ -13,12 +13,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
-resource-server: "http://localhost:8081"
+
 web-socket-config:
   endpoint: '/chat'
   cors: '*'
 
-http-server-exec: "http-server -c-1 -p 8081"
+
 
 app:
   environment: "TEST"
+  httpServerExec: "http-server -c-1 -p 8081"
+  resourceServer: "http://localhost:8081"

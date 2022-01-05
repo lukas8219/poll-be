@@ -1,5 +1,6 @@
 package com.lukas8219.pollbe.service.poll;
 
+import com.lukas8219.pollbe.config.ApplicationConfiguration;
 import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;
@@ -34,7 +35,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Import({
         PollMapperImpl.class,
         PollMapperImpl_.class,
-        LocalFileStorageService.class
+        LocalFileStorageService.class,
+        ApplicationConfiguration.class
 })
 class PollGetServiceImplTest {
 
