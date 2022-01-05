@@ -35,10 +35,6 @@ public class PollFacadeImpl implements PollFacade {
         return mapperGateway.toDTO(dto, userDetails);
     }
 
-    @Override
-    public PollDetailDTO getByDetail(Long id, PollUserDetails userDetails) {
-        return getService.getDetails(id, userDetails);
-    }
 
     public List<PollDTO> getAll(PollUserDetails userDetails) {
         var dto = getService.getAll(userDetails);

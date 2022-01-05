@@ -24,18 +24,4 @@ public interface PollMapper {
     })
     PollDTO toDTO(Poll poll, PollUserDetails userDetails);
 
-    PollDetailDTO toPollDetailDTO(Poll poll);
-
-
-    @Mappings({
-            @Mapping(target = "userPhoto", ignore = true),
-            @Mapping(target = "userEmail", source = "createdBy.email"),
-            @Mapping(target = "userName", source = "createdBy.name"),
-            @Mapping(target = "userId", source = "createdBy.id"),
-            @Mapping(target = "pollDescription", source = "description"),
-            @Mapping(target = "pollSubject", source = "subject"),
-            @Mapping(target = "pollExpiresAt", source = "expiresAt"),
-            @Mapping(target = "pollReportedAt", source = "reportedAt"),
-    })
-    PollCreatorDetailsDTO toDetail(Poll source);
 }

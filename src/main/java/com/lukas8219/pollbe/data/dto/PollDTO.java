@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class PollDTO {
     private Long against;
     private PollResultEnum result;
     private VoteDecisionEnum vote;
+    private List<UserVoteDTO> votes;
     private Long createdBy;
 
 }

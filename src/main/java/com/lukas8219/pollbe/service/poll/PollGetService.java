@@ -10,8 +10,6 @@ public interface PollGetService {
 
     Poll get(Long id, PollUserDetails userDetails);
 
-    PollDetailDTO getDetails(Long id, PollUserDetails pollUserDetails);
-
     List<Poll> getAll(PollUserDetails userDetails);
 
 }
