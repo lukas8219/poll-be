@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 public class UserVoteDTO {
 
     private final Long id;
-    private final String photo;
     private final String email;
     private final String name;
     private final VoteDecisionEnum vote;
+    private final String photo;
 
 }

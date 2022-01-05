@@ -19,8 +19,7 @@ public interface PollMapper {
             @Mapping(target = "id", source = "poll.id"),
             @Mapping(target = "subject", source = "poll.subject"),
             @Mapping(target = "description", source = "poll.description"),
-            @Mapping(target = "expiresAt", source = "poll.expiresAt"),
-            @Mapping(target = "createdBy", source = "poll.createdBy.id")
+            @Mapping(target = "expiresAt", source = "poll.expiresAt")
     })
     PollDTO toDTO(Poll poll, PollUserDetails userDetails);
 

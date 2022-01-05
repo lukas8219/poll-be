@@ -16,11 +16,15 @@ public class PollDTO {
     private String subject;
     private String description;
     private LocalDateTime expiresAt;
+    private LocalDateTime reportedAt;
+
+    private List<UserVoteDTO> usersVotes;
     private Long favor;
     private Long against;
+
     private PollResultEnum result;
     private VoteDecisionEnum vote;
-    private List<UserVoteDTO> votes;
-    private Long createdBy;
+
+    private PollCreatorDetailsDTO creator;
 
 }
