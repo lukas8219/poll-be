@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: 'jdbc:tc:mysql:latest://localhost:8080/poll'
+    username: 'root'
+    password: ''
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+resource-server: "http://localhost:8081"
+web-socket-config:
+  endpoint: '/chat'
+  cors: '*'
+
+http-server-exec: "http-server -c-1 -p 8081"
+
+app:
+  environment: "TEST"

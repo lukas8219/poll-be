@@ -1,21 +1,21 @@
 package com.lukas8219.pollbe.data.dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@RequiredArgsConstructor
 @Getter
+@Setter
 public class PollCreatorDetailsDTO {
 
-    private final String userPhoto;
-    private final String userEmail;
-    private final String userName;
-    private final Long userId;
+    private String userPhoto;
+    private String userEmail;
+    private String userName;
+    private Long userId;
 
-    private final String pollDescription;
-    private final String pollSubject;
-    private final LocalDateTime pollExpiresAt;
-    private final LocalDateTime pollReportedAt;
+    private String pollDescription;
+    private String pollSubject;
+    private LocalDateTime pollExpiresAt;
+    private LocalDateTime pollReportedAt;
 }

@@ -5,11 +5,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import static com.lukas8219.pollbe.config.Profiles.DEVELOPMENT;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@Profile({DEVELOPMENT})
 public class HttpServerStartup implements CommandLineRunner {
 
     private final ApplicationEnvironment applicationEnvironment;

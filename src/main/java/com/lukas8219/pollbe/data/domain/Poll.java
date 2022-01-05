@@ -30,7 +30,7 @@ public class Poll {
     @OneToMany(mappedBy = "poll", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<PollVote> votes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 

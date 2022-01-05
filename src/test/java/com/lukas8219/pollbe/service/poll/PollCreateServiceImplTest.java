@@ -5,8 +5,11 @@ import com.lukas8219.pollbe.data.dto.CreatePollDTO;
 import com.lukas8219.pollbe.data.mapper.PollMapper;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl;
 import com.lukas8219.pollbe.data.mapper.PollMapperImpl_;
+import com.lukas8219.pollbe.helper.builder.UserBuilder;
 import com.lukas8219.pollbe.helper.factory.UserDetailsFactory;
 import com.lukas8219.pollbe.helper.stub.PollRepositoryStub;
+import com.lukas8219.pollbe.helper.stub.UserRepositoryStub;
+import com.lukas8219.pollbe.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,11 +31,14 @@ class PollCreateServiceImplTest {
 
     private PollCreateServiceImpl subject;
     private PollRepositoryStub repositoryStub;
+    private UserRepository userRepository;
 
     @BeforeEach
     public void setup() {
         repositoryStub = new PollRepositoryStub();
-        subject = new PollCreateServiceImpl(repositoryStub);
+        userRepository = new UserRepositoryStub();
+        userRepository.save(UserBuilder.newBuilder(USER.getId()).build());
+        subject = new PollCreateServiceImpl(repositoryStub, userRepository);
     }
 
     public CreatePollDTO create(LocalDateTime expires) {
@@ -71,7 +77,7 @@ class PollCreateServiceImplTest {
             assertThat(result.getExpiresAt()).isEqualTo(expiresAt);
 
             assertThat(result.getCreatedBy()).isNotNull();
-            assertThat(result.getCreatedBy()).isEqualTo(USER.getId());
+            assertThat(result.getCreatedBy().getId()).isEqualTo(USER.getId());
         });
     }
 

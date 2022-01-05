@@ -1,14 +1,14 @@
 package com.lukas8219.pollbe.data.dto;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@Setter
+@RequiredArgsConstructor
 public class UserVoteDTO {
 
-    private String photo;
-    private String email;
-    private String name;
+    private final String photo;
+    private final String email;
+    private final String name;
 
 }
