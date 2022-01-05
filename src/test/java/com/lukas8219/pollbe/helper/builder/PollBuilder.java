@@ -44,6 +44,11 @@ public class PollBuilder {
         return this.poll;
     }
 
+    public PollBuilder reportedAt(LocalDateTime reportedAt){
+        this.poll.setReportedAt(reportedAt);
+        return this;
+    }
+
     public Poll build(LocalDateTime date) {
         this.poll.setExpiresAt(date);
         return this.poll;

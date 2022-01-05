@@ -77,8 +77,21 @@ public abstract class PollDecorator implements PollMapper {
     @Override
     public PollCreatorDetailsDTO toDetail(Poll source) {
         var result = delegate.toDetail(source);
-        result.setUserPhoto(fileStorageService.getLink(source.getCreatedBy().getPhoto()));
+        result.setUserPhoto(getLink(source));
         return result;
+    }
+
+    private String getLink(Poll source) {
+        if (source.getCreatedBy() != null) {
+            var createdBy = source.getCreatedBy();
+            if (createdBy.getPhoto() != null) {
+                return fileStorageService.getLink(createdBy.getPhoto());
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     private List<UserVoteDTO> toUserVote(Poll poll, VoteDecisionEnum vote) {
@@ -86,7 +99,10 @@ public abstract class PollDecorator implements PollMapper {
                 .filter(x -> x.getDecision() == vote)
                 .map(PollVote::getVotedBy)
                 .map(x -> {
-                    var photo = fileStorageService.getLink(x.getPhoto());
+                    String photo = null;
+                    if (x.getPhoto() != null) {
+                        photo = fileStorageService.getLink(x.getPhoto());
+                    }
                     return new UserVoteDTO(photo, x.getEmail(), x.getName());
                 })
                 .collect(Collectors.toList());

@@ -19,8 +19,8 @@ public class PollGatewayImpl implements PollGateway {
     private final PollDetailDAO detailDAO;
 
     @Override
-    public Optional<Poll> findByIdAndNotExpired(Long id) {
-        return repository.findByIdAndNotExpired(id);
+    public Optional<Poll> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override

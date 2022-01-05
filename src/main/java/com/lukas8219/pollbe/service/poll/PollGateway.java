@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PollGateway {
 
-    Optional<Poll> findByIdAndNotExpired(Long id);
+    Optional<Poll> findById(Long id);
 
     List<Poll> findAll();
 

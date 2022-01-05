@@ -11,7 +11,7 @@ public abstract class GenericIncrementalRepositoryStub<T, ID> implements CrudRep
     protected final List<T> database;
 
     public GenericIncrementalRepositoryStub() {
-        this.database = new ArrayList<>();
+        this.database = new ArrayList<>(5000);
     }
 
     public GenericIncrementalRepositoryStub(ArrayList<T> database) {
