@@ -23,10 +23,10 @@ public class PollResultReportServiceImpl implements PollResultReportService {
                 .stream()
                 .peek(report -> {
                     messagingTemplate.convertAndSendToUser(report.getUser().toString(), "/queue/", report);
-                    log.debug("Sending report to User [{}] for Poll [{}]", report.getUser(), report.getPollId());
+                    log.debug("Sending report to User [{}] for Poll [{}]", report.getUser(), report.getId());
                 })
                 .collect(Collectors.toList());
-        var reportIds = reports.stream().map(PollResultDTO::getPollId).distinct().collect(Collectors.toList());
+        var reportIds = reports.stream().map(PollResultDTO::getId).distinct().collect(Collectors.toList());
         log.debug("Executing update query for all reports with ID [{}]", reportIds);
         resultDao.updateReportedAtForPolls(reportIds);
     }

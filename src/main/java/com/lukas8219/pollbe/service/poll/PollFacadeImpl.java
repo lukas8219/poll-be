@@ -1,10 +1,7 @@
 package com.lukas8219.pollbe.service.poll;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
-import com.lukas8219.pollbe.data.dto.CreatePollDTO;
-import com.lukas8219.pollbe.data.dto.PollDTO;
-import com.lukas8219.pollbe.data.dto.PollDetailDTO;
-import com.lukas8219.pollbe.data.dto.PollVoteDTO;
+import com.lukas8219.pollbe.data.dto.*;
 import com.lukas8219.pollbe.data.mapper.PollMapperGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +33,7 @@ public class PollFacadeImpl implements PollFacade {
     }
 
 
-    public List<PollDTO> getAll(PollUserDetails userDetails) {
+    public List<PollListDTO> getAll(PollUserDetails userDetails) {
         var dto = getService.getAll(userDetails);
         return mapperGateway.toDTO(dto, userDetails);
     }

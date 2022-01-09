@@ -2,10 +2,7 @@ package com.lukas8219.pollbe.data.mapper;
 
 import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
-import com.lukas8219.pollbe.data.dto.CreatePollDTO;
-import com.lukas8219.pollbe.data.dto.PollCreatorDetailsDTO;
-import com.lukas8219.pollbe.data.dto.PollDTO;
-import com.lukas8219.pollbe.data.dto.PollDetailDTO;
+import com.lukas8219.pollbe.data.dto.*;
 import com.lukas8219.pollbe.data.mapper.decorator.PollDecorator;
 import org.mapstruct.*;
 
@@ -23,4 +20,9 @@ public interface PollMapper {
     })
     PollDTO toDTO(Poll poll, PollUserDetails userDetails);
 
+    @Mappings({
+            @Mapping(target = "id", source = "poll.id"),
+            @Mapping(target = "subject", source = "poll.subject"),
+    })
+    PollListDTO toListDTO(Poll poll, PollUserDetails userDetails);
 }

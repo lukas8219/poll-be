@@ -24,7 +24,7 @@ public class PollDaoImpl implements PollVoteDao {
         query
                 .select(cb.count(from.get(PollVote_.ID)))
                 .where(
-                        cb.equal(poll.get(Poll_.ID), poll),
+                        cb.equal(poll.get(Poll_.ID), pollId),
                         cb.equal(users.get(User_.ID), votedBy)
                 );
 

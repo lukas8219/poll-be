@@ -4,6 +4,7 @@ import com.lukas8219.pollbe.data.domain.Poll;
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.dto.PollDTO;
+import com.lukas8219.pollbe.data.dto.PollListDTO;
 import com.lukas8219.pollbe.data.dto.PollVoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,9 @@ public class PollMapperGatewayImpl implements PollMapperGateway {
     }
 
     @Override
-    public List<PollDTO> toDTO(List<Poll> dto, PollUserDetails userDetails) {
+    public List<PollListDTO> toDTO(List<Poll> dto, PollUserDetails userDetails) {
         return dto.stream()
-                .map(x -> pollMapper.toDTO(x, userDetails))
+                .map(x -> pollMapper.toListDTO(x, userDetails))
                 .collect(Collectors.toList());
     }
 }

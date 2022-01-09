@@ -14,8 +14,10 @@ public class CreatePollDTO {
 
     @NotEmpty(message = "{poll.created.subject.notEmpty}")
     private String subject;
+
     @NotEmpty(message = "{poll.created.description.notEmpty}")
     private String description;
+
     @NotNull(message = "{poll.created.expiresAt.notNull}")
     @Future(message = "{poll.created.future}")
     private LocalDateTime expiresAt;
