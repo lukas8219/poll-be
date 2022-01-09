@@ -38,7 +38,7 @@ class PollResultDaoImpTest extends DatabaseIT {
     public void allObjectsShouldHavePollId() {
         var test = subject.getAllFinishedPolls()
                 .stream()
-                .allMatch(x -> x.getPollId() != null);
+                .allMatch(x -> x.getId() != null);
         assertThat(test).isTrue();
     }
 
@@ -78,7 +78,7 @@ class PollResultDaoImpTest extends DatabaseIT {
 
     public void pollWithIdShouldBe(Long id, PollResultEnum resultEnum) {
         var vote = subject.getAllFinishedPolls().stream()
-                .filter(result -> result.getPollId() == id)
+                .filter(result -> result.getId() == id)
                 .findFirst()
                 .orElse(null);
 

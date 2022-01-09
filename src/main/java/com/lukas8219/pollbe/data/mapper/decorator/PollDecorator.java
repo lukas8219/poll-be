@@ -7,6 +7,7 @@ import com.lukas8219.pollbe.data.domain.PollVote;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.data.dto.PollCreatorDetailsDTO;
 import com.lukas8219.pollbe.data.dto.PollDTO;
+import com.lukas8219.pollbe.data.dto.PollListDTO;
 import com.lukas8219.pollbe.data.dto.UserVoteDTO;
 import com.lukas8219.pollbe.data.enumeration.PollResultEnum;
 import com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.AGAINST;
+import static com.lukas8219.pollbe.data.enumeration.VoteDecisionEnum.FAVOR;
 
 @Component
 public abstract class PollDecorator implements PollMapper {
@@ -67,7 +69,7 @@ public abstract class PollDecorator implements PollMapper {
         if (!CollectionUtils.isEmpty(poll.getVotes())) {
             return poll.getVotes()
                     .stream()
-                    .filter(vote -> vote.getVotedBy().equals(userDetails.getId()))
+                    .filter(vote -> vote.getVotedBy().getId().equals(userDetails.getId()))
                     .map(PollVote::getDecision)
                     .findFirst()
                     .orElse(null);
@@ -107,5 +109,16 @@ public abstract class PollDecorator implements PollMapper {
             photo = fileStorageService.getLink(user.getPhoto());
         }
         return photo;
+    }
+
+
+    @Override
+    public PollListDTO toListDTO(Poll poll, PollUserDetails userDetails) {
+        var result = delegate.toListDTO(poll, userDetails);
+        var favor = countVotes(poll, FAVOR);
+        var against = countVotes(poll, AGAINST);
+        result.setVote(getVoteDecision(poll, userDetails));
+        result.setResult(PollResultEnum.calculate(poll.getExpiresAt(), against, favor));
+        return result;
     }
 }

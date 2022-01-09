@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PollCreatorDetailsDTO {
 
-    private final String userPhoto;
-    private final String userEmail;
-    private final String userName;
-    private final Long userId;
+    private final String photo;
+    private final String email;
+    private final String name;
+    private final Long id;
 
 }
