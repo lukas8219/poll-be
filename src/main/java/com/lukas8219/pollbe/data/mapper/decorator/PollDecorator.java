@@ -39,9 +39,9 @@ public abstract class PollDecorator implements PollMapper {
         result.setFavor(countVotes(poll, VoteDecisionEnum.FAVOR));
         result.setResult(PollResultEnum.calculate(poll.getExpiresAt(), result.getAgainst(), result.getFavor()));
         result.setVote(getVoteDecision(poll, userDetails));
-        result.setReportedAt(poll.getReportedAt());
         result.setUsersVotes(toUserVotes(poll));
         result.setCreator(toCreator(poll));
+        result.setCreatedAt(poll.getCreatedAt());
         return result;
     }
 

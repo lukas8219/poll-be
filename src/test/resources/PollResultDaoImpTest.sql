@@ -6,8 +6,8 @@ INSERT INTO poll.users(id, created_at, email, name, password, phone_number) VALU
 
 -- INSERT POLLS
 
-INSERT INTO poll.polls(id, created_by, description, expires_at, reported_at, subject) VALUES(1, 1, 'Descrição', DATE_SUB(NOW(), INTERVAL 5 DAY), NULL, 'Titulo');
-INSERT INTO poll.polls(id, created_by, description, expires_at, reported_at, subject) VALUES(2, 1, 'Descrição', DATE_SUB(NOW(), INTERVAL 5 DAY), NULL, 'Titulo');
+INSERT INTO poll.polls(id, created_by, description, expires_at, reported_at, subject, created_at) VALUES(1, 1, 'Descrição', DATE_SUB(NOW(), INTERVAL 5 DAY), NULL, 'Titulo', NOW());
+INSERT INTO poll.polls(id, created_by, description, expires_at, reported_at, subject, created_at) VALUES(2, 1, 'Descrição', DATE_SUB(NOW(), INTERVAL 5 DAY), NULL, 'Titulo', NOW());
 
 -- INSERT POLL VOTES
 

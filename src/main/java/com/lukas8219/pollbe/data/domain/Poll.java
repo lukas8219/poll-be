@@ -34,6 +34,9 @@ public class Poll {
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
     @Column(name = "reported_at")
     private LocalDateTime reportedAt;
 }

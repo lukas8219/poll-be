@@ -9,6 +9,8 @@ import com.lukas8219.pollbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class PollCreateServiceImpl implements PollCreateService {
@@ -22,6 +24,7 @@ public class PollCreateServiceImpl implements PollCreateService {
         poll.setSubject(dto.getSubject());
         poll.setCreatedBy(userRepository.findById(userDetails.getId()).orElseThrow(UserNotFoundException::new));
         poll.setDescription(dto.getDescription());
+        poll.setCreatedAt(LocalDateTime.now());
         return repository.save(poll);
     }
 

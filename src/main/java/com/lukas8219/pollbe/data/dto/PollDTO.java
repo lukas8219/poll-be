@@ -16,7 +16,7 @@ public class PollDTO {
     private String subject;
     private String description;
     private LocalDateTime expiresAt;
-    private LocalDateTime reportedAt;
+    private LocalDateTime createdAt;
 
     private List<UserVoteDTO> usersVotes;
     private Long favor;
