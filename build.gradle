@@ -23,6 +23,7 @@ apply from: 'commons.gradle'
 
 dependencies {
 	implementation project(':common')
+	implementation project(':notification')
 	implementation project(':security')
 
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
