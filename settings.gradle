@@ -1,4 +1,5 @@
 rootProject.name = 'poll-be'
 include 'security'
 include 'common'
+include 'notification'
 
