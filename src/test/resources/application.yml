@@ -24,3 +24,6 @@ app:
   environment: "TEST"
   httpServerExec: "http-server -c-1 -p 8081"
   resourceServer: "http://localhost:8081"
+
+notification:
+  email: 'SEND_EMAIL_QUEUE'
