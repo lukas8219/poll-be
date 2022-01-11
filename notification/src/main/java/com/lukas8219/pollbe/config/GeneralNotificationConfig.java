@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class GeneralNotificationConfig {
 
     @Bean
-    public SendEmailStrategyFactory init(@Autowired Map<String, SendEmailStrategy> strategyMap) {
+    public SendEmailStrategyFactory init(@Autowired Map<String, SendEmailStrategy<?>> strategyMap) {
         return new SendEmailStrategyFactory(strategyMap.values().stream()
                 .collect(Collectors.toMap(SendEmailStrategy::getName, Function.identity())));
     }
