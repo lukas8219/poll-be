@@ -18,4 +18,5 @@ public class GeneralNotificationConfig {
         return new SendEmailStrategyFactory(strategyMap.values().stream()
                 .collect(Collectors.toMap(SendEmailStrategy::getName, Function.identity())));
     }
+
 }

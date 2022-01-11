@@ -9,7 +9,7 @@ public abstract class AbstractSendEmailStrategy<T> implements SendEmailStrategy<
     private final ObjectMapper mapper;
 
     @Override
-    public ObjectMapper getObjectMapper() {
+    public final ObjectMapper getObjectMapper() {
         return mapper;
     }
 }
