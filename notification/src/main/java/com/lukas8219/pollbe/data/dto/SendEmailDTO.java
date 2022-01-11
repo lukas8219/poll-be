@@ -13,4 +13,5 @@ public class SendEmailDTO {
 
     private NotificationType type;
     private String body;
+
 }
