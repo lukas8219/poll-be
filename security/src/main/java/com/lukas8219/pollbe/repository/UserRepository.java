@@ -13,8 +13,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByEmail(String username);
 
-    Optional<User> findByEmailAndProvider(String email, AuthenticationProviderEnum provider);
-
     @Query("SELECT COUNT(id)>0 FROM User WHERE email = :email AND id !=  :id")
     boolean emailAlreadyExists(String email, Long id);
 

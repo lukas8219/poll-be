@@ -26,7 +26,7 @@ public class UserCreateServiceImpl {
     }
 
     public User createOrFind(PollOAuth2User oAuth2User, AuthenticationProviderEnum provider) {
-        var user = repository.findByEmailAndProvider(oAuth2User.getEmail(), provider);
+        var user = repository.findByEmail(oAuth2User.getEmail());
         if (user.isEmpty()) {
             return create(oAuth2User.getEmail(), oAuth2User.getName(), null, provider);
         } else {
