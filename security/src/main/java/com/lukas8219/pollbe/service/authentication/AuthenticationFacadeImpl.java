@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,11 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
         return tokenService.generateToken(result);
     }
 
+    @Override
+    public TokenDTO authenticateByJwt(String jwt) {
+        return tokenService.generateToken(findByJwt(jwt));
+    }
+
     private PollUserDetails getPrincipal(AuthenticationDTO dto) {
         try {
             return (PollUserDetails) authenticationService.authenticate(dto.getEmail(), dto.getPassword()).getPrincipal();
@@ -32,9 +38,13 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
     }
 
-    public Authentication authenticateByWebSocket(String jwt) {
+    private PollUserDetails findByJwt(String jwt){
         var username = tokenService.extractUsername(jwt);
-        var user = authenticationService.loadUserByUsername(username);
+        return (PollUserDetails) authenticationService.loadUserByUsername(username);
+    }
+
+    public Authentication authenticateByWebSocket(String jwt) {
+        var user = findByJwt(jwt);
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 }

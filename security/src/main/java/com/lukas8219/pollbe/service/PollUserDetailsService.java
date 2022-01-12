@@ -1,4 +1,4 @@
-package com.lukas8219.pollbe.security;
+package com.lukas8219.pollbe.service;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
 import com.lukas8219.pollbe.data.domain.User;

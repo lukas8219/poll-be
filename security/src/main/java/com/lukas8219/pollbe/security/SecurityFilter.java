@@ -1,5 +1,6 @@
 package com.lukas8219.pollbe.security;
 
+import com.lukas8219.pollbe.service.PollUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -15,6 +15,10 @@ public class PollUserDetails extends User {
 
     private Long id;
 
+    public PollUserDetails(com.lukas8219.pollbe.data.domain.User user){
+        this(user.getId(), user.getEmail(), user.getPassword());
+    }
+
     public PollUserDetails(Long id, String username, String password) {
         this(username, password, Collections.singleton(new SimpleGrantedAuthority("USER")));
         this.id = id;

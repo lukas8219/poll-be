@@ -12,6 +12,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: "UM ID MOCKADO"
+            clientSecret: "UM SECRET MOCKADO"
+            scope:
+              - email
+              - profile
 
 
 web-socket-config:
@@ -27,3 +37,5 @@ app:
 
 notification:
   email: 'SEND_EMAIL_QUEUE'
+
+frontend-url: "http://localhost:3000"
