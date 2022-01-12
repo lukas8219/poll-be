@@ -36,7 +36,7 @@ public class OAuthAuthenticationSucessHandler implements AuthenticationSuccessHa
 
         var user = (PollOAuth2User) authentication.getPrincipal();
 
-        var createdUser = userCreateService.createOrFindByGoogle(user);
+        var createdUser = userCreateService.createOrFind(user);
         var details = new PollUserDetails(createdUser);
         var token = tokenService.generateToken(details);
 

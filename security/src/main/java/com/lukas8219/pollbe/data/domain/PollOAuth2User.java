@@ -11,6 +11,7 @@ import java.util.Map;
 public class PollOAuth2User implements OAuth2User {
 
     private final OAuth2User user;
+    private final AuthenticationProviderEnum provider;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -27,7 +28,11 @@ public class PollOAuth2User implements OAuth2User {
         return user.getAttribute("name");
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return user.getAttribute("email");
+    }
+
+    public AuthenticationProviderEnum getProvider() {
+        return provider;
     }
 }

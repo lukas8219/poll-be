@@ -21,14 +21,10 @@ public class UserCreateServiceImpl {
     private final String TEMPORARY_PASS = "1234";
     private PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public User createOrFindByGoogle(PollOAuth2User oAuth2User) {
-        return createOrFind(oAuth2User, GOOGLE);
-    }
-
-    public User createOrFind(PollOAuth2User oAuth2User, AuthenticationProviderEnum provider) {
+    public User createOrFind(PollOAuth2User oAuth2User) {
         var user = repository.findByEmail(oAuth2User.getEmail());
         if (user.isEmpty()) {
-            return create(oAuth2User.getEmail(), oAuth2User.getName(), null, provider);
+            return create(oAuth2User.getEmail(), oAuth2User.getName(), null, oAuth2User.getProvider());
         } else {
             return user.get();
         }
