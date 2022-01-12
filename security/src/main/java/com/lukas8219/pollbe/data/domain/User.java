@@ -35,6 +35,10 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "provider")
+    @Enumerated(EnumType.STRING)
+    private AuthenticationProviderEnum provider;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     private UserPhoto photo;
 

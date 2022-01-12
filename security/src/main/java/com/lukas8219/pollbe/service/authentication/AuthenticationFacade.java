@@ -8,6 +8,8 @@ public interface AuthenticationFacade {
 
     TokenDTO authenticate(AuthenticationDTO dto);
 
+    TokenDTO authenticateByJwt(String jwt);
+
     Authentication authenticateByWebSocket(String jwt);
 
 }

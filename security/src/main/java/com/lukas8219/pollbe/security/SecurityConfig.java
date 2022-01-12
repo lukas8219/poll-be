@@ -1,5 +1,7 @@
 package com.lukas8219.pollbe.security;
 
+import com.lukas8219.pollbe.handler.OAuthAuthenticationSucessHandler;
+import com.lukas8219.pollbe.service.PollOAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityFilter filter;
+    private final OAuthAuthenticationSucessHandler sucessHandler;
+    private final PollOAuth2Service oAuth2Service;
     @Value("${web-socket-config.endpoint}")
     private String WEB_SOCKET_ENDPOINT;
 
@@ -24,11 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/v1/authenticate/**", WEB_SOCKET_ENDPOINT)
+                .antMatchers("/v1/authenticate/**", "/oauth/**", WEB_SOCKET_ENDPOINT)
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oAuth2Service)
+                .and()
+                .successHandler(sucessHandler);
 
         //TODO add an EntryPoint
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

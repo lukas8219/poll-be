@@ -17,6 +17,16 @@ spring:
       hibernate:
         show_sql: false
         dialect: org.hibernate.dialect.MySQL8Dialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: "1069290924837-o39hgrpq1kpr4skqrt6tvk38c3m5ijk1.apps.googleusercontent.com"
+            clientSecret: "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"
+            scope:
+              - email
+              - profile
 
 web-socket-config:
   endpoint: '/chat'
@@ -29,3 +39,5 @@ app:
 
 notification:
   email: 'SEND_EMAIL_QUEUE'
+
+frontend-url: "http://localhost:3000"

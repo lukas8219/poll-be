@@ -1,11 +1,13 @@
 package com.lukas8219.pollbe.helper.stub;
 
+import com.lukas8219.pollbe.data.domain.AuthenticationProviderEnum;
 import com.lukas8219.pollbe.data.domain.User;
+import com.lukas8219.pollbe.repository.UserRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserRepositoryStub implements com.lukas8219.pollbe.repository.UserRepository {
+public class UserRepositoryStub implements UserRepository {
 
     private final Map<Long, User> database;
 
@@ -26,11 +28,21 @@ public class UserRepositoryStub implements com.lukas8219.pollbe.repository.UserR
     }
 
     @Override
+    public Optional<User> findByEmailAndProvider(String email, AuthenticationProviderEnum provider) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean emailAlreadyExists(String email, Long id) {
         return database.values()
                 .stream()
                 .filter(x -> !Objects.equals(x.getId(), id) && x.getEmail().equals(email))
                 .count() > 0;
+    }
+
+    @Override
+    public Optional<User> findByRegistrationId(String registrationId) {
+        return Optional.empty();
     }
 
     @Override
