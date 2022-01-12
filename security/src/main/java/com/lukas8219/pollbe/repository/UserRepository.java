@@ -18,6 +18,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("SELECT COUNT(id)>0 FROM User WHERE email = :email AND id !=  :id")
     boolean emailAlreadyExists(String email, Long id);
 
-    @Query("FROM User WHERE registrationId = :registrationId AND provider != 'API' ")
-    Optional<User> findByRegistrationId(String registrationId);
 }
