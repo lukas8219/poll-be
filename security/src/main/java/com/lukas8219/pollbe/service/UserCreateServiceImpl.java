@@ -5,13 +5,12 @@ import com.lukas8219.pollbe.data.domain.PollOAuth2User;
 import com.lukas8219.pollbe.data.domain.User;
 import com.lukas8219.pollbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
-import static com.lukas8219.pollbe.data.domain.AuthenticationProviderEnum.GOOGLE;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +18,7 @@ public class UserCreateServiceImpl {
 
     private final UserRepository repository;
     private final String TEMPORARY_PASS = "1234";
+    private final ApplicationEventPublisher publisher;
     private PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User createOrFind(PollOAuth2User oAuth2User) {

@@ -1,16 +1,9 @@
 package com.lukas8219.pollbe.api;
 
 import com.lukas8219.pollbe.data.domain.PollUserDetails;
-import com.lukas8219.pollbe.data.dto.CreatePollDTO;
-import com.lukas8219.pollbe.data.dto.PollDTO;
-import com.lukas8219.pollbe.data.dto.PollListDTO;
-import com.lukas8219.pollbe.data.dto.PollVoteDTO;
-import com.lukas8219.pollbe.data.mapper.PollMapper;
-import com.lukas8219.pollbe.exception.PollNotFoundException;
-import com.lukas8219.pollbe.repository.PollRepository;
+import com.lukas8219.pollbe.data.dto.*;
 import com.lukas8219.pollbe.service.poll.PollFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +43,14 @@ public class PollApi {
         return facade.getPoll(id, userDetails);
     }
 
+    @GetMapping("creation")
+    public PollParticipationDTO getLastCreation(@AuthenticationPrincipal PollUserDetails pollUserDetails){
+        return facade.getLastCreation(pollUserDetails);
+    }
+
+    @GetMapping("participations")
+    public List<PollParticipationDTO> getParticipation(@AuthenticationPrincipal PollUserDetails pollUserDetails){
+        return facade.getParticipations(pollUserDetails);
+    }
 
 }
