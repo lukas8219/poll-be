@@ -39,6 +39,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthenticationProviderEnum provider;
 
+    @Column(name = "about_me")
+    private String aboutMe;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     private UserPhoto photo;
 

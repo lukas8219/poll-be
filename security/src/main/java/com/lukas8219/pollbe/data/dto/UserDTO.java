@@ -12,6 +12,7 @@ public class UserDTO {
     private String email;
     private String phoneNumber;
     private Long id;
+    private String aboutMe;
 
     @JsonUnwrapped
     private UserPhotoDTO pic;
